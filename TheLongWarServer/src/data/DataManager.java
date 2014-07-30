@@ -1,6 +1,7 @@
 package data;
 
 import database.Database;
+import database.HardTable;
 import database.Table;
 
 /**
@@ -12,8 +13,10 @@ public class DataManager {
     static {
         unitTable = Database.getTable("unitTable");
         if (unitTable == null) {
-            unitTable = Database.addTable("unitTable");
+            unitTable = new HardTable("unitTable");
+            Database.addTable(unitTable);
             unitTable.addRows("NAME", "DMG", "RNG", "SPL", "MACC", "RACC", "SACC", "HP", "MANA", "SPD");
+            unitTable.addEntry("Warrior", "4", "0", "0", "30", "0", "0", "100", "0", "1");
         }
     }
 }

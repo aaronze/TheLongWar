@@ -1,5 +1,6 @@
 package main;
 
+import army.Army;
 import java.net.ServerSocket;
 
 /**
@@ -9,6 +10,8 @@ public class TheLongWarServer {
     private static final int port = 2574;
     
     public static void main(String[] args) {
+        new Army();
+        
         try {
             ServerSocket ss = new ServerSocket(port);
             

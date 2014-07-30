@@ -21,7 +21,7 @@ public class Unit {
     
     public Unit(String template) {
         Table units = DataManager.unitTable.where("NAME", template);
-        
+
         meleeDamage = Integer.parseInt(units.select("DMG"));
         rangedDamage = Integer.parseInt(units.select("RNG"));
         spellDamage = Integer.parseInt(units.select("SPL"));
@@ -33,5 +33,9 @@ public class Unit {
         maxHP = hp = Double.parseDouble(units.select("HP"));
         maxMana = mana = Double.parseDouble(units.select("MANA"));
         speed = Double.parseDouble(units.select("SPD"));
+    }
+    
+    public boolean isHealthy() {
+        return hp >= maxHP/2;
     }
 }

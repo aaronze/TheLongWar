@@ -7,5 +7,10 @@ import java.util.ArrayList;
  * @author Aaron
  */
 public class Army {
-    private ArrayList<Unit> units = new ArrayList<>();
+    public ArrayList<Unit> units = new ArrayList<>();
+    
+    public void add(Unit unit) {
+        units.add(unit);
+    }
+    
 }
