@@ -53,3 +53,4 @@ $RECYCLE.BIN/
 *.msp
 /TheLongWar/nbproject/private/
 /TheLongWarServer/nbproject/private/
+/TheLongWarClient/build/
