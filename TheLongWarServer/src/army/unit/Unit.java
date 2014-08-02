@@ -9,6 +9,7 @@ import util.Util;
  * @author Aaron
  */
 public class Unit {
+    public String name;
     private int spellID = 0;
     private int meleeDamage = 4;
     private int rangedDamage = 0;
@@ -23,6 +24,8 @@ public class Unit {
     private double speed = 1;
     
     public Unit(String template) {
+        name = template;
+        
         Table units = DataManager.unitTable.where("NAME", template);
 
         meleeDamage = Integer.parseInt(units.select("DMG"));
@@ -36,6 +39,10 @@ public class Unit {
         maxHP = hp = Double.parseDouble(units.select("HP"));
         maxMana = mana = Double.parseDouble(units.select("MANA"));
         speed = Double.parseDouble(units.select("SPD"));
+    }
+    
+    public boolean isCommander() {
+        return this instanceof Commander;
     }
     
     public boolean isRanged() {
@@ -59,6 +66,19 @@ public class Unit {
         
     }
     
+    public boolean isMelee() {
+        return meleeDamage > 0 && meleeAccuracy > 0;
+    }
+    
+    public void meleeAttack(Unit unit) {
+        double damage = 0;
+        
+        if (Util.random(meleeAccuracy)) 
+            damage += meleeDamage;
+        
+        unit.takeDamage(damage);
+    }
+    
     public boolean isHealthy() {
         return hp >= maxHP/2;
     }
@@ -73,5 +93,14 @@ public class Unit {
     
     public void takeDamage(double amount) {
         hp -= amount;
+    }
+    
+    public int getType() {
+        if (isRanged()) return Army.RANGED;
+        if (isSpellCaster()) return Army.CASTER;
+        if (isCommander()) return Army.COMMANDER;
+        if (isMelee()) return Army.MELEE;
+        
+        return Army.NONE;
     }
 }
