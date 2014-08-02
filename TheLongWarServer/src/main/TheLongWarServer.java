@@ -16,10 +16,10 @@ public class TheLongWarServer {
         Army aggressor = new Army("Attacker");
         Army defender = new Army("Defender");
         
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 100; i++) {
             aggressor.add(new Unit("Archer"));
         }
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 100; i++) {
             defender.add(new Unit("Warrior"));
         }
         

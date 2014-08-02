@@ -69,7 +69,7 @@ public class Simulator {
 
             // For every ranged unit, range attack a random enemy unit
             for (Unit unit : a.units) {
-                if (unit.isRanged()) {
+                if (unit.isHealthy() && unit.isRanged()) {
                     unit.rangedAttack(b.getRandomUnit(true, false));
                 }
             }
@@ -83,7 +83,7 @@ public class Simulator {
 
             // For every caster unit, spell attack the opposing army
             for (Unit unit : a.units) {
-                if (unit.isSpellCaster()) {
+                if (unit.isHealthy() && unit.isSpellCaster()) {
                     unit.spellAttack(a, b);
                 }
             }
@@ -101,7 +101,7 @@ public class Simulator {
                 
                 // For every ranged unit, range attack a random enemy unit
                 for (Unit unit : a.units) {
-                    if (unit.isMelee()) {
+                    if (unit.isHealthy() && unit.isMelee()) {
                         unit.meleeAttack(b.getRandomUnit(true, false));
                     }
                 }
