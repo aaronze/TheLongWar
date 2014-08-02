@@ -24,6 +24,7 @@ public class TheLongWarServer {
         }
         
         System.out.println(Simulator.simulateBattle(aggressor, defender));
+        System.out.println(Simulator.simulateBattle(aggressor, defender));
         
         try {
             ServerSocket ss = new ServerSocket(port);
