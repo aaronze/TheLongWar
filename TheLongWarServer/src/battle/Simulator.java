@@ -90,6 +90,9 @@ public class Simulator {
         }
         
         for (int round = 0; round < MAX_ROUNDS; round++) {
+            // Terminate early if either side is too injured to continue
+            if (aggressor.isInjured() || defender.isInjured()) break;
+            
             // Melee Damage
             for (int turn = 0; turn < 2; turn++) {
                 // Ranged
@@ -121,15 +124,25 @@ public class Simulator {
             report.victoryStatus = BOTH_WON_TIE;
         }
         
-        report.attackerMeleeInjuries = aggressor.countUnits(Army.MELEE, true, false) - report.attackerMeleeTotal - attackerMeleeInjured;
-        report.attackerRangedInjuries = aggressor.countUnits(Army.RANGED, true, false) - report.attackerRangedTotal - attackerRangedInjured;
-        report.attackerCasterInjuries = aggressor.countUnits(Army.CASTER, true, false) - report.attackerCasterTotal - attackerCasterInjured;
-        report.attackerCommanderInjuries = aggressor.countUnits(Army.COMMANDER, true, false) - report.attackerCommanderTotal - attackerCommanderInjured;
+        report.attackerMeleeInjuries = aggressor.countUnits(Army.MELEE, true, false) - aggressor.countUnits(Army.MELEE, false, false) - attackerMeleeInjured;
+        report.attackerRangedInjuries = aggressor.countUnits(Army.RANGED, true, false) - aggressor.countUnits(Army.RANGED, false, false) - attackerRangedInjured;
+        report.attackerCasterInjuries = aggressor.countUnits(Army.CASTER, true, false) - aggressor.countUnits(Army.CASTER, false, false) - attackerCasterInjured;
+        report.attackerCommanderInjuries = aggressor.countUnits(Army.COMMANDER, true, false) - aggressor.countUnits(Army.COMMANDER, false, false) - attackerCommanderInjured;
         
-        report.defenderMeleeInjuries = defender.countUnits(Army.MELEE, true, false) - report.defenderMeleeTotal - defenderMeleeInjured;
-        report.defenderRangedInjuries = defender.countUnits(Army.RANGED, true, false) - report.defenderRangedTotal - defenderRangedInjured;
-        report.defenderCasterInjuries = defender.countUnits(Army.CASTER, true, false) - report.defenderCasterTotal - defenderCasterInjured;
-        report.defenderCommanderInjuries = defender.countUnits(Army.COMMANDER, true, false) - report.defenderCommanderTotal - defenderCommanderInjured;
+        report.defenderMeleeInjuries = defender.countUnits(Army.MELEE, true, false) - defender.countUnits(Army.MELEE, false, false) - defenderMeleeInjured;
+        report.defenderRangedInjuries = defender.countUnits(Army.RANGED, true, false) - defender.countUnits(Army.RANGED, false, false) - defenderRangedInjured;
+        report.defenderCasterInjuries = defender.countUnits(Army.CASTER, true, false) - defender.countUnits(Army.CASTER, false, false) - defenderCasterInjured;
+        report.defenderCommanderInjuries = defender.countUnits(Army.COMMANDER, true, false) - defender.countUnits(Army.COMMANDER, false, false) - defenderCommanderInjured;
+        
+        report.attackerMeleeDead = aggressor.countUnits(Army.MELEE, false, true) - aggressor.countUnits(Army.MELEE, false, false) - attackerMeleeDead;
+        report.attackerRangedDead = aggressor.countUnits(Army.RANGED, false, true) - aggressor.countUnits(Army.RANGED, false, false) - attackerRangedDead;
+        report.attackerCasterDead = aggressor.countUnits(Army.CASTER, false, true) - aggressor.countUnits(Army.CASTER, false, false) - attackerCasterDead;
+        report.attackerCommanderDead = aggressor.countUnits(Army.COMMANDER, false, true) - aggressor.countUnits(Army.COMMANDER, false, false) - attackerCommanderDead;
+        
+        report.defenderMeleeDead = defender.countUnits(Army.MELEE, false, true) - defender.countUnits(Army.MELEE, false, false) - defenderMeleeDead;
+        report.defenderRangedDead = defender.countUnits(Army.RANGED, false, true) - defender.countUnits(Army.RANGED, false, false) - defenderRangedDead;
+        report.defenderCasterDead = defender.countUnits(Army.CASTER, false, true) - defender.countUnits(Army.CASTER, false, false) - defenderCasterDead;
+        report.defenderCommanderDead = defender.countUnits(Army.COMMANDER, false, true) - defender.countUnits(Army.COMMANDER, false, false) - defenderCommanderDead;
         
         return report;
     }
