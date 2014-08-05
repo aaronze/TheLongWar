@@ -18,5 +18,13 @@ public class Home extends JFrame {
         setVisible(true);
         
         add(new World());
+        
+        while (true) {
+            try {
+                repaint();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

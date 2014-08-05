@@ -2,6 +2,8 @@ package ui;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.MouseInfo;
+import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.image.BufferedImage;
@@ -16,8 +18,8 @@ import secure.Resources;
  * @author Aaron
  */
 public class World extends JPanel {
-    static BufferedImage lookupImage;
-    static ArrayList<Legend> legends;
+    public static BufferedImage lookupImage;
+    public static ArrayList<Legend> legends;
     
     /**
      * Returns the name of the country (empty string for no country) at the given
@@ -45,7 +47,7 @@ public class World extends JPanel {
     static {
         // Load legends and lookup image
         try {
-            lookupImage = ImageIO.read(Resources.getResource("countries.jpg"));
+            lookupImage = ImageIO.read(Resources.getResource("countries.png"));
             legends = new ArrayList<>();
             
             BufferedReader reader = new BufferedReader(new FileReader(Resources.getResource("codes.txt")));
@@ -70,7 +72,7 @@ public class World extends JPanel {
         
     }
     
-    private static class Legend {
+    public static class Legend {
         public String name;
         public int code;
         
@@ -81,6 +83,7 @@ public class World extends JPanel {
     }
     
     private BufferedImage worldImage;
+    private String selectedCountry = "";
     
     public World() {
         try {
@@ -95,7 +98,7 @@ public class World extends JPanel {
                 double mx = e.getX() * 1.0 / getWidth();
                 double my = e.getY() * 1.0 / getHeight();
                 
-                System.out.println(getCountryAt(mx, my));
+                selectedCountry = getCountryAt(mx, my);
             }
         });
     }
@@ -103,6 +106,18 @@ public class World extends JPanel {
     @Override
     public void paint(Graphics g) {
         g.drawImage(worldImage.getScaledInstance(this.getWidth(), this.getHeight(), BufferedImage.SCALE_DEFAULT), 0, 0, null);
+        
+        if (!selectedCountry.isEmpty()) {
+            Point mouse = MouseInfo.getPointerInfo().getLocation();
+
+            int stringWidth = g.getFontMetrics().stringWidth(selectedCountry);
+            
+            g.setColor(Color.DARK_GRAY);
+            g.fillRoundRect(mouse.x, mouse.y - 40, stringWidth + 20, 30, 10, 10);
+
+            g.setColor(Color.WHITE);
+            g.drawString(selectedCountry, mouse.x + 10, mouse.y - 20);
+        }
     }
     
     

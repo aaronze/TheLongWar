@@ -28,7 +28,7 @@ public class MapStitcher {
         
         // Output the result
         try {
-            ImageIO.write(composite, "jpg", new File("output.jpg"));
+            ImageIO.write(composite, "png", new File("output.png"));
         } catch (Exception e) {
             e.printStackTrace();
         }
