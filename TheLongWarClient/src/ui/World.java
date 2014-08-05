@@ -2,6 +2,7 @@ package ui;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.event.ComponentAdapter;
@@ -20,7 +21,7 @@ import secure.Resources;
  * @author Aaron
  */
 public class World extends JPanel {
-    public static BufferedImage lookupImage;
+    public static String[][] lookup;
     public static ArrayList<Legend> legends;
     
     /**
@@ -32,24 +33,16 @@ public class World extends JPanel {
      * @return Name of country or empty string for no country
      */
     public static String getCountryAt(double mX, double mY) {
-        int x = (int)(mX * lookupImage.getWidth());
-        int y = (int)(mY * lookupImage.getHeight());
+        int x = (int)(mX * lookup.length);
+        int y = (int)(mY * lookup[0].length);
         
-        int code = lookupImage.getRGB(x, y);
-        
-        for (Legend legend : legends) {
-            if (legend.code == code) {
-                return legend.name;
-            }
-        }
-        
-        return "";
+        return lookup[x][y];
     }
     
     static {
         // Load legends and lookup image
         try {
-            lookupImage = ImageIO.read(Resources.getResource("countries.png"));
+            BufferedImage lookupImage = ImageIO.read(Resources.getResource("countries.png"));
             legends = new ArrayList<>();
             
             BufferedReader reader = new BufferedReader(new FileReader(Resources.getResource("codes.txt")));
@@ -67,6 +60,21 @@ public class World extends JPanel {
                 int code = new Color(r, g, b).getRGB();
                 
                 legends.add(new Legend(name, code));
+            }
+            
+            lookup = new String[lookupImage.getWidth()][lookupImage.getHeight()];
+            for (int x = 0; x < lookup.length; x++) {
+                for (int y = 0; y < lookup[0].length; y++) {
+                    int code = lookupImage.getRGB(x, y);
+                    
+                    lookup[x][y] = "";
+                    for (Legend legend : legends) {
+                        if (legend.code == code) {
+                            lookup[x][y] = legend.name;
+                            break;
+                        }
+                    }
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -86,12 +94,14 @@ public class World extends JPanel {
     
     private BufferedImage worldImage;
     private BufferedImage mapOverlay;
+    private Image mapScaled;
     private String selectedCountry = "";
     
     public World() {
         try {
             worldImage = ImageIO.read(Resources.getResource("world.jpg"));
             mapOverlay = new BufferedImage(worldImage.getWidth(), worldImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
+            mapScaled = worldImage.getScaledInstance(this.getWidth(), this.getHeight(), BufferedImage.SCALE_DEFAULT);
             buildOverlay();
         } catch (Exception e) {
             e.printStackTrace();
@@ -115,6 +125,7 @@ public class World extends JPanel {
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
+                mapScaled = worldImage.getScaledInstance(getWidth(), getHeight(), BufferedImage.SCALE_DEFAULT);
                 buildOverlay();
             }
         });
@@ -122,8 +133,7 @@ public class World extends JPanel {
     
     public void buildOverlay() {
         if (this.getWidth() != 0) {
-            mapOverlay.getGraphics().drawImage(
-                        worldImage.getScaledInstance(this.getWidth(), this.getHeight(), BufferedImage.SCALE_DEFAULT), 0, 0, null);
+            mapOverlay.getGraphics().drawImage(mapScaled, 0, 0, null);
 
             double scaleX = this.getWidth() * 1.0 / worldImage.getWidth();
             double scaleY = this.getHeight() * 1.0 / worldImage.getHeight();
