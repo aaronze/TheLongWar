@@ -37,6 +37,9 @@ public class World extends JPanel {
         int x = (int)(mX * lookup.length);
         int y = (int)(mY * lookup[0].length);
         
+        if (mX < 0 || mX >= 1.0 || mY < 0 || mY >= 1.0) 
+            return "";
+        
         return lookup[x][y];
     }
     
@@ -136,8 +139,8 @@ public class World extends JPanel {
         addMouseMotionListener(new MouseMotionAdapter() {
             @Override
             public void mouseMoved(MouseEvent e) {
-                double mx = e.getX() * 1.0 / getWidth();
-                double my = e.getY() * 1.0 / getHeight();
+                double mx = (e.getX() * 1.0 / getWidth()) / zoom - panX;
+                double my = (e.getY() * 1.0 / getHeight()) / zoom;
                 
                 String previous = selectedCountry;
                 selectedCountry = getCountryAt(mx, my);
@@ -173,8 +176,8 @@ public class World extends JPanel {
                     for (int y = 0; y < mapOverlay.getHeight(); y++) {
                         String country = getCountryAt(x * stepX, y * stepY);
 
-                        int xP = (int)(x * scaleX);
-                        int yP = (int)(y * scaleY);
+                        int xP = (int)((x - panX) * scaleX * zoom);
+                        int yP = (int)((y - panY) * scaleY * zoom);
 
                         if (country.equals(selectedCountry)) {
                             mapOverlay.setRGB(xP, yP, increaseBrightness(mapOverlay.getRGB(xP, yP), 40));
