@@ -7,6 +7,7 @@ import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.image.BufferedImage;
@@ -97,15 +98,40 @@ public class World extends JPanel {
     private Image mapScaled;
     private String selectedCountry = "";
     
+    private double zoom = 1;
+    private int panX = 0;
+    private int panY = 0;
+    
     public World() {
         try {
             worldImage = ImageIO.read(Resources.getResource("world.jpg"));
             mapOverlay = new BufferedImage(worldImage.getWidth(), worldImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
-            mapScaled = worldImage.getScaledInstance(this.getWidth(), this.getHeight(), BufferedImage.SCALE_DEFAULT);
+            mapScaled = worldImage.getSubimage(panX, panY, (int)(mapOverlay.getWidth()/zoom), (int)(mapOverlay.getHeight()/zoom))
+                        .getScaledInstance((int)(getWidth()), (int)(getHeight()), BufferedImage.SCALE_DEFAULT);
             buildOverlay();
         } catch (Exception e) {
             e.printStackTrace();
         }
+        
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                double midX = e.getX() / zoom;
+                double midY = e.getY() / zoom;
+                
+                zoom *= 2;
+                
+                panX += midX - ((getWidth() / zoom) / 2);
+                panY += midY - ((getHeight() / zoom) / 2);
+                
+                if (panX < 0) panX = 0;
+                if (panY < 0) panY = 0;
+                
+                mapScaled = worldImage.getSubimage(panX, panY, (int)(mapOverlay.getWidth()/zoom), (int)(mapOverlay.getHeight()/zoom))
+                        .getScaledInstance((int)(getWidth()), (int)(getHeight()), BufferedImage.SCALE_DEFAULT);
+                buildOverlay();
+            }
+        });
         
         addMouseMotionListener(new MouseMotionAdapter() {
             @Override
@@ -125,7 +151,8 @@ public class World extends JPanel {
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
-                mapScaled = worldImage.getScaledInstance(getWidth(), getHeight(), BufferedImage.SCALE_DEFAULT);
+                mapScaled = worldImage.getSubimage(0, 0, (int)(mapOverlay.getWidth()/zoom), (int)(mapOverlay.getHeight()/zoom))
+                        .getScaledInstance((int)(getWidth()), (int)(getHeight()), BufferedImage.SCALE_DEFAULT);
                 buildOverlay();
             }
         });
