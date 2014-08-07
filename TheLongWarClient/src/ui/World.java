@@ -1,5 +1,6 @@
 package ui;
 
+import data.Nation;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -16,6 +17,7 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
+import secure.Handle;
 import secure.Resources;
 
 /**
@@ -24,6 +26,11 @@ import secure.Resources;
 public class World extends JPanel {
     public static String[][] lookup;
     public static ArrayList<Legend> legends;
+    
+    public final static int ALLIANCE_VIEW = 1;
+    public final static int THREAT_VIEW = 2;
+    
+    public static int allianceViewType = ALLIANCE_VIEW;
     
     /**
      * Returns the name of the country (empty string for no country) at the given
@@ -98,6 +105,7 @@ public class World extends JPanel {
     
     private BufferedImage worldImage;
     private BufferedImage mapOverlay;
+    private BufferedImage allianceOverlay;
     private Image mapScaled;
     private String selectedCountry = "";
     
@@ -109,8 +117,10 @@ public class World extends JPanel {
         try {
             worldImage = ImageIO.read(Resources.getResource("world.jpg"));
             mapOverlay = new BufferedImage(worldImage.getWidth(), worldImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
+            allianceOverlay = new BufferedImage(worldImage.getWidth(), worldImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
             mapScaled = worldImage.getSubimage(panX, panY, (int)(mapOverlay.getWidth()/zoom), (int)(mapOverlay.getHeight()/zoom))
                         .getScaledInstance((int)(getWidth()), (int)(getHeight()), BufferedImage.SCALE_DEFAULT);
+            buildAllianceOverlay();
             buildOverlay();
         } catch (Exception e) {
             e.printStackTrace();
@@ -157,8 +167,39 @@ public class World extends JPanel {
                 mapScaled = worldImage.getSubimage(0, 0, (int)(mapOverlay.getWidth()/zoom), (int)(mapOverlay.getHeight()/zoom))
                         .getScaledInstance((int)(getWidth()), (int)(getHeight()), BufferedImage.SCALE_DEFAULT);
                 buildOverlay();
+                buildAllianceOverlay();
             }
         });
+    }
+    
+    public void buildAllianceOverlay() {
+        ArrayList<Nation> nations = Handle.getNations();
+        
+        int backgroundColor = new Color(0, 0, 0, 0).getRGB();
+        
+        double stepX = 1.0 / getWidth();
+        double stepY = 1.0 / getHeight();
+        
+        if (allianceViewType == ALLIANCE_VIEW) {
+            // For each pixel, if it represents a country look up it's nation. Color code appropriately.
+            for (int x = 0; x < allianceOverlay.getWidth(); x++) {
+                for (int y = 0; y < allianceOverlay.getHeight(); y++) {
+                    String country = getCountryAt(x * stepX, y * stepY);
+                    
+                    int color = backgroundColor;
+                    
+                    if (!country.isEmpty()) {
+                        for (Nation nation : nations) {
+                            if (nation.contains(country)) {
+                                color = (nation.getTexture().getColorAt(x, y) & 0xFFFFFF) | (160 << 24);
+                            }
+                        }
+                    }
+                    
+                    allianceOverlay.setRGB(x, y, color);
+                }
+            }
+        }
     }
     
     public void buildOverlay() {
@@ -204,6 +245,7 @@ public class World extends JPanel {
     @Override
     public void paint(Graphics g) {
         g.drawImage(mapOverlay, 0, 0, null);
+        g.drawImage(allianceOverlay, 0, 0, null);
         
         if (!selectedCountry.isEmpty()) {
             Point mouse = MouseInfo.getPointerInfo().getLocation();
