@@ -164,21 +164,18 @@ public class World extends JPanel {
     public void buildOverlay() {
         if (this.getWidth() != 0) {
             mapOverlay.getGraphics().drawImage(mapScaled, 0, 0, null);
-
-            double scaleX = this.getWidth() * 1.0 / worldImage.getWidth();
-            double scaleY = this.getHeight() * 1.0 / worldImage.getHeight();
-
+            
             if (!selectedCountry.isEmpty()) {
-                double stepX = 1.0 / mapOverlay.getWidth();
-                double stepY = 1.0 / mapOverlay.getHeight();
-
-                for (int x = 0; x < mapOverlay.getWidth(); x++) {
-                    for (int y = 0; y < mapOverlay.getHeight(); y++) {
+                double stepX = 1.0 / getWidth();
+                double stepY = 1.0 / getHeight();
+                
+                for (int x = 0; x < getWidth(); x++) {
+                    for (int y = 0; y < getHeight(); y++) {
                         String country = getCountryAt(x * stepX, y * stepY);
-
-                        int xP = (int)((x - panX) * scaleX * zoom);
-                        int yP = (int)((y - panY) * scaleY * zoom);
-
+                        
+                        int xP = (int)((x * zoom) - panX);
+                        int yP = (int)((y * zoom) - panY);
+                        
                         if (country.equals(selectedCountry)) {
                             mapOverlay.setRGB(xP, yP, increaseBrightness(mapOverlay.getRGB(xP, yP), 40));
                         }
