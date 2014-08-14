@@ -108,10 +108,12 @@ public class World extends JPanel {
     private BufferedImage allianceOverlay;
     private Image mapScaled;
     private String selectedCountry = "";
+    private String attackFromCountry = "";
     
     private double zoom = 1;
     private int panX = 0;
     private int panY = 0;
+    
     
     public World() {
         try {
@@ -127,9 +129,31 @@ public class World extends JPanel {
         }
         
         addMouseListener(new MouseAdapter() {
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                double mx = (e.getX() * 1.0 / getWidth()) / zoom - panX;
+                double my = (e.getY() * 1.0 / getHeight()) / zoom - panY;
+
+                attackFromCountry = getCountryAt(mx, my);
+            }
+            
+            
             @Override
             public void mouseReleased(MouseEvent e) {
-                double midX = e.getX() / zoom;
+                if (!attackFromCountry.isEmpty()) {
+                    double mx = (e.getX() * 1.0 / getWidth()) / zoom - panX;
+                    double my = (e.getY() * 1.0 / getHeight()) / zoom - panY;
+                    
+                    String attackToCountry = getCountryAt(mx, my);
+                    
+                    if (!attackToCountry.isEmpty()) {
+                        Handle.capture(attackFromCountry, attackToCountry);
+                        buildAllianceOverlay();
+                    }
+                }
+                
+                /*double midX = e.getX() / zoom;
                 double midY = e.getY() / zoom;
                 
                 zoom *= 2;
@@ -142,7 +166,7 @@ public class World extends JPanel {
                 
                 mapScaled = worldImage.getSubimage(panX, panY, (int)(mapOverlay.getWidth()/zoom), (int)(mapOverlay.getHeight()/zoom))
                         .getScaledInstance((int)(getWidth()), (int)(getHeight()), BufferedImage.SCALE_DEFAULT);
-                buildOverlay();
+                buildOverlay();*/
             }
         });
         
@@ -150,7 +174,7 @@ public class World extends JPanel {
             @Override
             public void mouseMoved(MouseEvent e) {
                 double mx = (e.getX() * 1.0 / getWidth()) / zoom - panX;
-                double my = (e.getY() * 1.0 / getHeight()) / zoom;
+                double my = (e.getY() * 1.0 / getHeight()) / zoom - panY;
                 
                 String previous = selectedCountry;
                 selectedCountry = getCountryAt(mx, my);
