@@ -17,6 +17,7 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
+import math.Vec;
 import secure.Handle;
 import secure.Resources;
 
@@ -109,6 +110,7 @@ public class World extends JPanel {
     private Image mapScaled;
     private String selectedCountry = "";
     private String attackFromCountry = "";
+    private Point attackFromLocation;
     
     private double zoom = 1;
     private int panX = 0;
@@ -136,6 +138,7 @@ public class World extends JPanel {
                 double my = (e.getY() * 1.0 / getHeight()) / zoom - panY;
 
                 attackFromCountry = getCountryAt(mx, my);
+                attackFromLocation = e.getPoint();
             }
             
             
@@ -153,7 +156,12 @@ public class World extends JPanel {
                     }
                 }
                 
-                /*double midX = e.getX() / zoom;
+                attackFromLocation = null;
+                
+                /*
+                Misplaced Zoom function
+                
+                double midX = e.getX() / zoom;
                 double midY = e.getY() / zoom;
                 
                 zoom *= 2;
@@ -281,6 +289,42 @@ public class World extends JPanel {
 
             g.setColor(Color.WHITE);
             g.drawString(selectedCountry, mouse.x + 10, mouse.y - 20);
+        }
+        
+        if (attackFromLocation != null) {
+            // Draw arrow represinting attack
+            Point mouse = MouseInfo.getPointerInfo().getLocation();
+            
+            Vec source = new Vec(attackFromLocation.x, attackFromLocation.y);
+            Vec dest = new Vec(mouse.x + 4, mouse.y - 15);
+            
+            double arrowSize = 20;
+            
+            Vec dir = dest.subtract(source).normalize();
+            
+            Vec DL = source.add(dir.rotate(Math.PI / 2).scale(0.5).scale(arrowSize));
+            Vec DR = source.add(dir.rotate(-(Math.PI / 2)).scale(0.5).scale(arrowSize));
+            
+            Vec ML = dest.add(dir.rotate(-(9 * Math.PI / 10)).scale(0.5).scale(arrowSize));
+            Vec UL = dest.add(dir.rotate(-(3 * Math.PI / 4)).scale(0.8).scale(arrowSize));
+            
+            Vec MR = dest.add(dir.rotate(9 * Math.PI / 10).scale(0.5).scale(arrowSize));
+            Vec UR = dest.add(dir.rotate(3 * Math.PI / 4).scale(0.8).scale(arrowSize));
+            
+            Vec U = dest;
+            
+            int[] xPoints = new int[] {
+                (int)DL.x,(int)MR.x,(int)UR.x,(int)U.x,(int)UL.x,(int)ML.x,(int)DR.x
+            };
+            
+            int[] yPoints = new int[] {
+                (int)DL.y,(int)MR.y,(int)UR.y,(int)U.y,(int)UL.y,(int)ML.y,(int)DR.y
+            };
+            
+            int len = 7;
+            
+            g.setColor(Color.RED);
+            g.fillPolygon(xPoints, yPoints, len);
         }
     }
     
