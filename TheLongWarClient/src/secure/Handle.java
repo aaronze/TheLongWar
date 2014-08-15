@@ -21,6 +21,7 @@ public class Handle {
     public static ArrayList<String> europeCountries = new ArrayList<>();
     public static ArrayList<String> southAmericaCountries = new ArrayList<>();
     
+    private static ArrayList<Nation> nations;
     public static long lastUpdated = new Date().getTime();
 
     public static void capture(String fromCountry, String fromNation, String toCountry, String toNation) {
@@ -41,8 +42,9 @@ public class Handle {
         return fakeOwner;
     }
     
-    public static ArrayList<Nation> getNations() {
-        ArrayList<Nation> nations = new ArrayList<>();
+    public static void buildNations() {
+        lastUpdated = new Date().getTime();
+        nations = new ArrayList<>();
         
         String packet = Network.request(""+Codes.REQUEST_GET_NATION_INFO);
         try {
@@ -77,7 +79,18 @@ public class Handle {
             }
             nat.add(country);
         }
+    }
+    
+    public static void updateNations() {
+        long time = lastUpdated;
+        lastUpdated = new Date().getTime();
         
+        String packet = Network.request(Codes.REQUEST_GET_CHANGES_SINCE + " " + time);
+        
+        System.out.println(packet);
+    }
+    
+    public static ArrayList<Nation> getNations() {
         return nations;
     }
 }

@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -49,6 +50,30 @@ public class Session extends Thread {
                 int[] stream = DataManager.toDataStream();
                 String packet = "";
                 for (int i : stream) packet += i + " ";
+                out.println(packet);
+            }
+            
+            if (command == Codes.REQUEST_GET_CHANGES_SINCE) {
+                long lastSeen = Long.parseLong(line.substring(2));
+                
+                ArrayList<String[]> entries = DataManager.captureTable.getEntries();
+                
+                ArrayList<String> modifiedCountries = new ArrayList<>();
+                for (int i = entries.size()-1; i >= 0; i--) {
+                    String[] entry = entries.get(i);
+                    long time = Long.parseLong(entry[1]);
+                    
+                    if (time < lastSeen) break;
+                    
+                    String country = entry[3];
+                    
+                    if (!modifiedCountries.contains(country))
+                        modifiedCountries.add(country);
+                }
+                
+                String packet = "";
+                for (String s : modifiedCountries)
+                    packet += s + " ";
                 out.println(packet);
             }
             

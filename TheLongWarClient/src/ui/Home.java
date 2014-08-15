@@ -1,5 +1,7 @@
 package ui;
 
+import data.Codes;
+import java.util.Date;
 import javax.swing.JFrame;
 import secure.Network;
 
@@ -18,14 +20,24 @@ public class Home extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
         
-        add(new World());
+        World world = new World();
+        add(world);
         
+        long timer = 0;
         while (true) {
+            long previous = new Date().getTime();
+            if (timer > 1000) {
+                world.buildAllianceOverlay();
+                timer = 0;
+            }
+            
             try {
                 repaint();
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            long time = new Date().getTime();
+            timer += time - previous;
         }
     }
 }

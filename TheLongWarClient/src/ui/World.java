@@ -213,6 +213,7 @@ public class World extends JPanel {
     
     private ArrayList<Nation> nations;
     public void buildAllianceOverlay() {
+        Handle.updateNations();
         nations = Handle.getNations();
         
         int backgroundColor = new Color(0, 0, 0, 0).getRGB();
