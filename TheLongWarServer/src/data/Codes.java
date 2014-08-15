@@ -7,9 +7,30 @@ public class Codes {
     public final static int REQUEST_GET_CHANGES_SINCE = 1;
     public final static int REQUEST_GET_CURRENT_STATE = 2;
     public final static int REQUEST_GET_NATION_INFO = 3;
+    public final static int REQUEST_ATTACK = 4;
     
     public static int toCode(int nation, int country) {
         return getNation(nation) | getCountry(country);
+    }
+    
+    public static int toCode(String country, String nation) {
+        int nationCode = 0;
+        for (int i = 0; i < NATION_NAMES.length; i++) {
+            if (nation.equals(NATION_NAMES[i])) {
+                nationCode = i + 1;
+                break;
+            }
+        }
+        
+        int countryCode = 0;
+        for (int i = 0; i < COUNTRY_NAMES.length; i++) {
+            if (country.equals(COUNTRY_NAMES[i])) {
+                countryCode = i + 1;
+                break;
+            }
+        }
+        
+        return toCode(nationCode, countryCode);
     }
     
     public static int getCountry(int code) {

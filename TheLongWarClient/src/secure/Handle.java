@@ -23,12 +23,8 @@ public class Handle {
     
     public static long lastUpdated = new Date().getTime();
 
-    public static void capture(String fromCountry, String toCountry) {
-        ArrayList<String> from = getOwner(fromCountry);
-        ArrayList<String> to = getOwner(toCountry);
-        
-        to.remove(toCountry);
-        from.add(toCountry);
+    public static void capture(String fromCountry, String fromNation, String toCountry, String toNation) {
+        Network.request("" + Codes.REQUEST_ATTACK + " " + Codes.toCode(fromCountry, fromNation) + " " + Codes.toCode(toCountry, toNation));
     }
     
     public static ArrayList<String> getOwner(String country) {

@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Date;
 
 /**
  * @author Aaron
@@ -57,6 +58,22 @@ public class Session extends Thread {
                     packet += s[0] + ":" + s[1] + ":" + s[2] + ";";
                 }
                 out.println(packet);
+            }
+            
+            if (command == Codes.REQUEST_ATTACK) {
+                String[] data = line.substring(2).split(" ");
+                
+                int attacker = Integer.parseInt(data[0]);
+                int defender = Integer.parseInt(data[1]);
+                
+                DataManager.captureTable.addEntry(DataManager.captureTable.nextID(), ""+new Date().getTime(), ""+attacker, ""+defender);
+                
+                int capturingNation = Codes.getNation(attacker);
+                int capturedCountry = Codes.getCountry(defender);
+                
+                DataManager.countryTable.updateEntry("CountryName", ""+capturedCountry, "CountryOwner", ""+capturingNation);
+                
+                out.println(""+Codes.REQUEST_ATTACK);
             }
             
         } catch (Exception e) {

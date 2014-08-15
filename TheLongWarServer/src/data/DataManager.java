@@ -40,7 +40,7 @@ public class DataManager {
         if (captureTable == null) {
             captureTable = new HardTable("captureTable");
             Database.addTable(captureTable);
-            captureTable.addRows("captureID", "time", "attackingCountry", "attackingNation", "defendingCountry", "defendingNation");
+            captureTable.addRows("captureID", "time", "attacker", "defender");
         }
         
         unitTable = new MemTable("unitTable");
