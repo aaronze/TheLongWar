@@ -151,7 +151,14 @@ public class World extends JPanel {
                     String attackToCountry = getCountryAt(mx, my);
                     
                     if (!attackToCountry.isEmpty()) {
-                        Handle.capture(attackFromCountry, attackToCountry);
+                        String attackFromNation = "";
+                        String attackToNation = "";
+                        for (Nation n : nations) {
+                            if (n.contains(attackFromCountry)) attackFromNation = n.name;
+                            if (n.contains(attackToCountry)) attackToNation = n.name;
+                        }
+                        
+                        Handle.capture(attackFromCountry, attackFromNation, attackToCountry, attackToNation);
                         buildAllianceOverlay();
                     }
                 }

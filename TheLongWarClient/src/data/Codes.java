@@ -10,6 +10,7 @@ public class Codes {
     public final static int REQUEST_ATTACK = 4;
     
     public static int toCode(int nation, int country) {
+        System.out.println(nation + ", " + country + " -> " + (getNation(nation) | getCountry(country)));
         return getNation(nation) | getCountry(country);
     }
     
@@ -30,7 +31,7 @@ public class Codes {
             }
         }
         
-        return toCode(nationCode, countryCode);
+        return toCode(nationCode, countryCode << 8);
     }
     
     public static int getCountry(int code) {
