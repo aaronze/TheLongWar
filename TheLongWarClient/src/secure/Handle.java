@@ -53,9 +53,10 @@ public class Handle {
             String[] natty = packet.split(";");
             for (String na : natty) {
                 String[] info = na.split(":");
-
-                Nation nation = new Nation(info[0]);
+                
+                Nation nation = new Nation(Codes.getNationName(Integer.parseInt(info[0])));
                 nation.texture = new Texture(ImageIO.read(Resources.getResource(info[2])));
+                nations.add(nation);
             }
         } catch (Exception e) {
             e.printStackTrace();
