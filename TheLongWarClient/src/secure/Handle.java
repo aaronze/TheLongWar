@@ -82,6 +82,10 @@ public class Handle {
     }
     
     public static void updateNations() {
+        if (nations == null) {
+            buildNations();
+        }
+        
         long time = lastUpdated;
         lastUpdated = new Date().getTime();
         

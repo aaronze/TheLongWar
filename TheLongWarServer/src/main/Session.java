@@ -63,7 +63,7 @@ public class Session extends Thread {
                     String[] entry = entries.get(i);
                     long time = Long.parseLong(entry[1]);
                     
-                    if (time < lastSeen) break;
+                    if (time < lastSeen - 5000) break;
                     
                     String country = entry[3];
                     
