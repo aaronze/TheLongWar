@@ -177,5 +177,9 @@ public class Codes {
     public final static int COUNTRY_PERU =           0x8B00;
     public final static int COUNTRY_SURINAME =       0x8C00;
     public final static int COUNTRY_URUGUAY =        0x8D00;
-    public final static int COUNTRY_VENEZEULA =      0x8E00;
+    public final static int COUNTRY_VENEZUELA =      0x8E00;
+    public final static int COUNTRY_AUSTRIA =        0x8F00;
+    
+    public final static int COUNTRY_TOGO =           0x9000;
+    public final static int COUNTRY_TUNISIA =        0x9100;
 }
