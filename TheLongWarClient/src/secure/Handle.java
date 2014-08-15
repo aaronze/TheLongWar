@@ -5,6 +5,7 @@ import data.Texture;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import javax.imageio.ImageIO;
 
 /**
@@ -19,6 +20,8 @@ public class Handle {
     public static ArrayList<String> europeCountries = new ArrayList<>();
     public static ArrayList<String> southAmericaCountries = new ArrayList<>();
     
+    public static long lastUpdated = new Date().getTime();
+    
     static {
         australiaCountries.addAll(Arrays.asList("Australia", "New Zealand", "Papua New Guinea", "Indonesia", "Malaysia", "Philippines"));
         americanaCountries.addAll(Arrays.asList("United States", "Canada", "Alaska", "Mexico", "Greenland", "Iceland", "Guatemala", "Honduras", "Nicaragua", "Costa Rica", "Panama"));
@@ -27,7 +30,7 @@ public class Handle {
         africaCountries.addAll(Arrays.asList("Quwait", "Qatar", "Iran", "Iraq", "Saudi Arabia", "Jordan", "Israel", "Syria", "Azerbaijan", "Turkmenistan", "United Arab Emirates", "Oman", "Yemen", "Afghanistan", "Pakistan"));
         europeCountries.addAll(Arrays.asList("Albania", "Austria", "Belarus", "Bosnia and Herzegovina", "Croatia", "Denmark", "Greece", "Italy", "Lithuania", "Macedonia", "Netherlands", "Poland", "Romania", "Slovakia", "Spain", "Switzerland", "United Kingdom",
                 "Belgium", "Bulgaria", "Czech Republic", "Estonia", "France", "Germany", "Hungary", "Ireland", "Latvia", "Luxembourg", "Moldovia", "Portugal", "Serbia", "Slovenia", "Ukraine"));
-        southAmericaCountries.addAll(Arrays.asList("Argentina", "Bolivia", "Brazil", "Chile", "Colombia", "Ecuador", "French Guiana", "Guyana", "Panama", "Paraguay", "Peru", "Suriname", "Uruguay", "Venezuela"));
+        southAmericaCountries.addAll(Arrays.asList("Argentina", "Bolivia", "Brazil", "Chile", "Colombia", "Ecuador", "French Guiana", "Guyana", "Paraguay", "Peru", "Suriname", "Uruguay", "Venezuela"));
     }
     
     public static void capture(String fromCountry, String toCountry) {
