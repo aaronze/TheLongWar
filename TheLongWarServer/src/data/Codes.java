@@ -4,8 +4,11 @@ package data;
  * @author Aaron
  */
 public class Codes {
-    public static int makeCode(int nation, int country) {
-        return nation | country;
+    public final static int REQUEST_GET_CHANGES_SINCE = 1;
+    public final static int REQUEST_GET_CURRENT_STATE = 2;
+    
+    public static int toCode(int nation, int country) {
+        return getNation(nation) | getCountry(country);
     }
     
     public static int getCountry(int code) {
@@ -14,6 +17,14 @@ public class Codes {
     
     public static int getNation(int code) {
         return code & MASK_NATION;
+    }
+    
+    public static String getCountryName(int code) {
+        return COUNTRY_NAMES[(getCountry(code) >> 8) - 1];
+    }
+    
+    public static String getNationName(int code) {
+        return NATION_NAMES[getNation(code) - 1];
     }
     
     public final static int MASK_NATION = 0xFF;
@@ -27,6 +38,10 @@ public class Codes {
     public final static int NATION_EUROPE =         0x06;
     public final static int NATION_AFRICA =         0x07;
     public final static int NATION_SOUTH_AMERICA =  0x08;
+    
+    public final static String[] NATION_NAMES = new String[] {
+        "Russia", "Australasia", "China", "Middle East", "Americana", "Europe", "Africa", "South America"
+    };
     
     public final static int COUNTRY_RUSSIA =        0x0100;
     public final static int COUNTRY_ARMENIA =       0x0200;
@@ -43,7 +58,7 @@ public class Codes {
     public final static int COUNTRY_ALBANIA =       0x0D00;
     public final static int COUNTRY_BELARUS =       0x0E00;
     public final static int COUNTRY_BOSNIA_AND_HERZEGOVINA = 0x0F00;
-    
+
     public final static int COUNTRY_CROATIA =        0x1000;
     public final static int COUNTRY_DENMARK =        0x1100;
     public final static int COUNTRY_GREECE =         0x1200;
@@ -182,4 +197,39 @@ public class Codes {
     
     public final static int COUNTRY_TOGO =           0x9000;
     public final static int COUNTRY_TUNISIA =        0x9100;
+    
+    public final static String[] COUNTRY_NAMES = new String[] {
+        "Russia", "Armenia", "Mongolia", "Kazakhstan", "Finland", "Sweden", "Norway", "Uzbekistan", "Kyrgyzstan", "Georgia", 
+        "Turkey", "Tajikstan", "Albania", "Belarus", "Bosnia And Herzegovina", "Croatia", "Denmark", "Greece", "Italy", 
+        "Lithuania", "Macedonia", "Netherlands", "Poland", "Romania", "Slovakia", "Spain", "Switzerland", "United Kingdom", 
+        "Belgium", "Bulgaria", "Czech Republic", "Estonia", "France", "Germany", "Hungary", "Ireland", "Latvia", "Luxembourg", 
+        "Moldovia", "Portugal", "Serbia", "Slovenia", "Ukraine", "Quwait", "Qatar", "Iran", "Iraq", "Saudi Arabia", "Jordan", 
+        "Israel", "Syria", "Azerbaijan", "Turkmenistan", "United Arab Emirates", "Oman", "Yemen", "Afghanistan", "Pakistan", 
+        "Algeria", "Burkina Kaso", "Angola", "Benin", "Botswana", "Burundi", "Camaroon", "Central African Republic", "Chad", 
+        "Cote d'Ivoire", "Democratic Republic Of The Congo", "Egypt", "Equatorial Guinea", "Ethiopia", "Gabon", "Ghana", 
+        "Ginnea Bissau", "Guinea", "Kenya", "Lesotho", "Liberia", "Libya", "Madagascar", "Malawi", "Mali", "Mauritania", 
+        "Morocco", "Mozambique", "Namibia", "Niger", "Nigeria", "Republic Of The Congo", "Rwanda", "Senegal", "Sierra Leone", 
+        "Somalia", "South Africa", "Sudan", "Tanzania", "Uganda", "Western Sahara", "Zambia", "Zimbabwe", "United States", 
+        "Canada", "Alaska", "Mexico", "Greenland", "Iceland", "Guatemala", "Honduras", "Nicaragua", "Costa Rica", "Panama", 
+        "Australia", "New Zealand", "Papua New Guinea", "Indonesia", "Malaysia", "Philippines", "China", "Taiwan", "India", 
+        "Thailand", "Vietnam", "Burma", "Bangladesh", "Cambodia", "South Korea", "North Korea", "Japan", "Argentina", "Bolivia", 
+        "Brazil", "Chile", "Colombia", "Ecuador", "French Guiana", "Guyana", "Paraguay", "Peru", "Suriname", "Uruguay", 
+        "Venezuela", "Austria", "Togo", "Tunisia", "Russia", "Armenia", "Mongolia", "Kazakhstan", "Finland", "Sweden", 
+        "Norway", "Uzbekistan", "Kyrgyzstan", "Georgia", "Turkey", "Tajikstan", "Albania", "Belarus", "Bosnia And Herzegovina", 
+        "Croatia", "Denmark", "Greece", "Italy", "Lithuania", "Macedonia", "Netherlands", "Poland", "Romania", "Slovakia", 
+        "Spain", "Switzerland", "United Kingdom", "Belgium", "Bulgaria", "Czech Republic", "Estonia", "France", "Germany", 
+        "Hungary", "Ireland", "Latvia", "Luxembourg", "Moldovia", "Portugal", "Serbia", "Slovenia", "Ukraine", "Quwait", 
+        "Qatar", "Iran", "Iraq", "Saudi Arabia", "Jordan", "Israel", "Syria", "Azerbaijan", "Turkmenistan", 
+        "United Arab Emirates", "Oman", "Yemen", "Afghanistan", "Pakistan", "Algeria", "Burkina Kaso", "Angola", 
+        "Benin", "Botswana", "Burundi", "Camaroon", "Central African Republic", "Chad", "Cote Divoire", 
+        "Democratic Republic Of The Congo", "Egypt", "Equatorial Guinea", "Ethiopia", "Gabon", "Ghana", 
+        "Ginnea Bissau", "Guinea", "Kenya", "Lesotho", "Liberia", "Libya", "Madagascar", "Malawi", "Mali", 
+        "Mauritania", "Morocco", "Mozambique", "Namibia", "Niger", "Nigeria", "Republic Of The Congo", 
+        "Rwanda", "Senegal", "Sierra Leone", "Somalia", "South Africa", "Sudan", "Tanzania", "Uganda", "Western Sahara", 
+        "Zambia", "Zimbabwe", "United States", "Canada", "Alaska", "Mexico", "Greenland", "Iceland", "Guatemala", 
+        "Honduras", "Nicaragua", "Costa Rica", "Panama", "Australia", "New Zealand", "Papua New Guinea", "Indonesia", 
+        "Malaysia", "Philippines", "China", "Taiwan", "India", "Thailand", "Vietnam", "Burma", "Bangladesh", "Cambodia", 
+        "South Korea", "North Korea", "Japan", "Argentina", "Bolivia", "Brazil", "Chile", "Colombia", "Ecuador", 
+        "French Guiana", "Guyana", "Paraguay", "Peru", "Suriname", "Uruguay", "Venezuela", "Austria", "Togo", "Tunisia"
+    };
 }

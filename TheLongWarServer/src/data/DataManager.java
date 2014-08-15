@@ -5,6 +5,7 @@ import database.Database;
 import database.HardTable;
 import database.MemTable;
 import database.Table;
+import java.util.ArrayList;
 
 /**
  * @author Aaron
@@ -65,15 +66,32 @@ public class DataManager {
         addDefaultCountries();
     }
     
+    public static int[] toDataStream() {
+        int[] stream = new int[countryTable.size()];
+        
+        ArrayList<String[]> countries = countryTable.getEntries();
+        
+        for (int i = 0; i < countries.size(); i++) {
+            String[] countryEntry = countries.get(i);
+            
+            int country = Integer.parseInt(countryEntry[0]);
+            int nation = Integer.parseInt(countryEntry[1]);
+            
+            stream[i] = Codes.toCode(nation, country);
+        }
+        
+        return stream;
+    }
+    
     private static void addDefaultNations() {
-        nationTable.addEntry(""+Codes.NATION_AUSTRALASIA, ""+Codes.COUNTRY_AUSTRALIA, "australasia.png");
-        nationTable.addEntry(""+Codes.NATION_CHINA, ""+Codes.COUNTRY_CHINA, "china.png");
-        nationTable.addEntry(""+Codes.NATION_AMERICANA, ""+Codes.COUNTRY_UNITED_STATES, "usa.png");
-        nationTable.addEntry(""+Codes.NATION_SOUTH_AMERICA, ""+Codes.COUNTRY_PERU, "southamerica.png");
-        nationTable.addEntry(""+Codes.NATION_AFRICA, ""+Codes.COUNTRY_SOUTH_AFRICA, "africa.png");
-        nationTable.addEntry(""+Codes.NATION_EUROPE, ""+Codes.COUNTRY_UNITED_KINGDOM, "europe.png");
-        nationTable.addEntry(""+Codes.NATION_MIDDLE_EAST, ""+Codes.COUNTRY_IRAQ, "middleeast.png");
-        nationTable.addEntry(""+Codes.NATION_RUSSIA, ""+Codes.COUNTRY_RUSSIA, "russia.png");
+        nationTable.addEntry(""+NATION_AUSTRALASIA, ""+COUNTRY_AUSTRALIA, "australasia.png");
+        nationTable.addEntry(""+NATION_CHINA, ""+COUNTRY_CHINA, "china.png");
+        nationTable.addEntry(""+NATION_AMERICANA, ""+COUNTRY_UNITED_STATES, "usa.png");
+        nationTable.addEntry(""+NATION_SOUTH_AMERICA, ""+COUNTRY_PERU, "southamerica.png");
+        nationTable.addEntry(""+NATION_AFRICA, ""+COUNTRY_SOUTH_AFRICA, "africa.png");
+        nationTable.addEntry(""+NATION_EUROPE, ""+COUNTRY_UNITED_KINGDOM, "europe.png");
+        nationTable.addEntry(""+NATION_MIDDLE_EAST, ""+COUNTRY_IRAQ, "middleeast.png");
+        nationTable.addEntry(""+NATION_RUSSIA, ""+COUNTRY_RUSSIA, "russia.png");
     }
     
     private static void addDefaultCountries() {
@@ -88,171 +106,171 @@ public class DataManager {
     }
     
     private static void addDefaultRussia() {
-        countryTable.addEntry(""+Codes.COUNTRY_RUSSIA, ""+Codes.NATION_RUSSIA);
-        countryTable.addEntry(""+Codes.COUNTRY_ARMENIA, ""+Codes.NATION_RUSSIA);
-        countryTable.addEntry(""+Codes.COUNTRY_MONGOLIA, ""+Codes.NATION_RUSSIA);
-        countryTable.addEntry(""+Codes.COUNTRY_KAZAKHSTAN, ""+Codes.NATION_RUSSIA);
-        countryTable.addEntry(""+Codes.COUNTRY_FINLAND, ""+Codes.NATION_RUSSIA);
-        countryTable.addEntry(""+Codes.COUNTRY_SWEDEN, ""+Codes.NATION_RUSSIA);
-        countryTable.addEntry(""+Codes.COUNTRY_NORWAY, ""+Codes.NATION_RUSSIA);
-        countryTable.addEntry(""+Codes.COUNTRY_UZBEKISTAN, ""+Codes.NATION_RUSSIA);
-        countryTable.addEntry(""+Codes.COUNTRY_KYRGYZSTAN, ""+Codes.NATION_RUSSIA);
-        countryTable.addEntry(""+Codes.COUNTRY_GEORGIA, ""+Codes.NATION_RUSSIA);
-        countryTable.addEntry(""+Codes.COUNTRY_TURKEY, ""+Codes.NATION_RUSSIA);
-        countryTable.addEntry(""+Codes.COUNTRY_TAJIKSTAN, ""+Codes.NATION_RUSSIA);
+        countryTable.addEntry(""+COUNTRY_RUSSIA, ""+NATION_RUSSIA);
+        countryTable.addEntry(""+COUNTRY_ARMENIA, ""+NATION_RUSSIA);
+        countryTable.addEntry(""+COUNTRY_MONGOLIA, ""+NATION_RUSSIA);
+        countryTable.addEntry(""+COUNTRY_KAZAKHSTAN, ""+NATION_RUSSIA);
+        countryTable.addEntry(""+COUNTRY_FINLAND, ""+NATION_RUSSIA);
+        countryTable.addEntry(""+COUNTRY_SWEDEN, ""+NATION_RUSSIA);
+        countryTable.addEntry(""+COUNTRY_NORWAY, ""+NATION_RUSSIA);
+        countryTable.addEntry(""+COUNTRY_UZBEKISTAN, ""+NATION_RUSSIA);
+        countryTable.addEntry(""+COUNTRY_KYRGYZSTAN, ""+NATION_RUSSIA);
+        countryTable.addEntry(""+COUNTRY_GEORGIA, ""+NATION_RUSSIA);
+        countryTable.addEntry(""+COUNTRY_TURKEY, ""+NATION_RUSSIA);
+        countryTable.addEntry(""+COUNTRY_TAJIKSTAN, ""+NATION_RUSSIA);
     }
     
     private static void addDefaultEurope() {
-        countryTable.addEntry(""+Codes.COUNTRY_ALBANIA, ""+Codes.NATION_EUROPE);
-        countryTable.addEntry(""+Codes.COUNTRY_AUSTRIA, ""+Codes.NATION_EUROPE);
-        countryTable.addEntry(""+Codes.COUNTRY_BELARUS, ""+Codes.NATION_EUROPE);
-        countryTable.addEntry(""+Codes.COUNTRY_BOSNIA_AND_HERZEGOVINA, ""+Codes.NATION_EUROPE);
-        countryTable.addEntry(""+Codes.COUNTRY_CROATIA, ""+Codes.NATION_EUROPE);
-        countryTable.addEntry(""+Codes.COUNTRY_DENMARK, ""+Codes.NATION_EUROPE);
-        countryTable.addEntry(""+Codes.COUNTRY_GREECE, ""+Codes.NATION_EUROPE);
-        countryTable.addEntry(""+Codes.COUNTRY_ITALY, ""+Codes.NATION_EUROPE);
-        countryTable.addEntry(""+Codes.COUNTRY_LITHUANIA, ""+Codes.NATION_EUROPE);
-        countryTable.addEntry(""+Codes.COUNTRY_MACEDONIA, ""+Codes.NATION_EUROPE);
-        countryTable.addEntry(""+Codes.COUNTRY_NETHERLANDS, ""+Codes.NATION_EUROPE);
-        countryTable.addEntry(""+Codes.COUNTRY_POLAND, ""+Codes.NATION_EUROPE);
-        countryTable.addEntry(""+Codes.COUNTRY_ROMANIA, ""+Codes.NATION_EUROPE);
-        countryTable.addEntry(""+Codes.COUNTRY_SLOVAKIA, ""+Codes.NATION_EUROPE);
-        countryTable.addEntry(""+Codes.COUNTRY_SPAIN, ""+Codes.NATION_EUROPE);
-        countryTable.addEntry(""+Codes.COUNTRY_SWITZERLAND, ""+Codes.NATION_EUROPE);
-        countryTable.addEntry(""+Codes.COUNTRY_UNITED_KINGDOM, ""+Codes.NATION_EUROPE);
-        countryTable.addEntry(""+Codes.COUNTRY_BELGIUM, ""+Codes.NATION_EUROPE);
-        countryTable.addEntry(""+Codes.COUNTRY_BULGARIA, ""+Codes.NATION_EUROPE);
-        countryTable.addEntry(""+Codes.COUNTRY_CZECH_REPUBLIC, ""+Codes.NATION_EUROPE);
-        countryTable.addEntry(""+Codes.COUNTRY_ESTONIA, ""+Codes.NATION_EUROPE);
-        countryTable.addEntry(""+Codes.COUNTRY_FRANCE, ""+Codes.NATION_EUROPE);
-        countryTable.addEntry(""+Codes.COUNTRY_GERMANY, ""+Codes.NATION_EUROPE);
-        countryTable.addEntry(""+Codes.COUNTRY_HUNGARY, ""+Codes.NATION_EUROPE);
-        countryTable.addEntry(""+Codes.COUNTRY_IRELAND, ""+Codes.NATION_EUROPE);
-        countryTable.addEntry(""+Codes.COUNTRY_LATVIA, ""+Codes.NATION_EUROPE);
-        countryTable.addEntry(""+Codes.COUNTRY_LUXEMBOURG, ""+Codes.NATION_EUROPE);
-        countryTable.addEntry(""+Codes.COUNTRY_MOLDOVIA, ""+Codes.NATION_EUROPE);
-        countryTable.addEntry(""+Codes.COUNTRY_PORTUGAL, ""+Codes.NATION_EUROPE);
-        countryTable.addEntry(""+Codes.COUNTRY_SERBIA, ""+Codes.NATION_EUROPE);
-        countryTable.addEntry(""+Codes.COUNTRY_SLOVENIA, ""+Codes.NATION_EUROPE);
-        countryTable.addEntry(""+Codes.COUNTRY_UKRAINE, ""+Codes.NATION_EUROPE);
+        countryTable.addEntry(""+COUNTRY_ALBANIA, ""+NATION_EUROPE);
+        countryTable.addEntry(""+COUNTRY_AUSTRIA, ""+NATION_EUROPE);
+        countryTable.addEntry(""+COUNTRY_BELARUS, ""+NATION_EUROPE);
+        countryTable.addEntry(""+COUNTRY_BOSNIA_AND_HERZEGOVINA, ""+NATION_EUROPE);
+        countryTable.addEntry(""+COUNTRY_CROATIA, ""+NATION_EUROPE);
+        countryTable.addEntry(""+COUNTRY_DENMARK, ""+NATION_EUROPE);
+        countryTable.addEntry(""+COUNTRY_GREECE, ""+NATION_EUROPE);
+        countryTable.addEntry(""+COUNTRY_ITALY, ""+NATION_EUROPE);
+        countryTable.addEntry(""+COUNTRY_LITHUANIA, ""+NATION_EUROPE);
+        countryTable.addEntry(""+COUNTRY_MACEDONIA, ""+NATION_EUROPE);
+        countryTable.addEntry(""+COUNTRY_NETHERLANDS, ""+NATION_EUROPE);
+        countryTable.addEntry(""+COUNTRY_POLAND, ""+NATION_EUROPE);
+        countryTable.addEntry(""+COUNTRY_ROMANIA, ""+NATION_EUROPE);
+        countryTable.addEntry(""+COUNTRY_SLOVAKIA, ""+NATION_EUROPE);
+        countryTable.addEntry(""+COUNTRY_SPAIN, ""+NATION_EUROPE);
+        countryTable.addEntry(""+COUNTRY_SWITZERLAND, ""+NATION_EUROPE);
+        countryTable.addEntry(""+COUNTRY_UNITED_KINGDOM, ""+NATION_EUROPE);
+        countryTable.addEntry(""+COUNTRY_BELGIUM, ""+NATION_EUROPE);
+        countryTable.addEntry(""+COUNTRY_BULGARIA, ""+NATION_EUROPE);
+        countryTable.addEntry(""+COUNTRY_CZECH_REPUBLIC, ""+NATION_EUROPE);
+        countryTable.addEntry(""+COUNTRY_ESTONIA, ""+NATION_EUROPE);
+        countryTable.addEntry(""+COUNTRY_FRANCE, ""+NATION_EUROPE);
+        countryTable.addEntry(""+COUNTRY_GERMANY, ""+NATION_EUROPE);
+        countryTable.addEntry(""+COUNTRY_HUNGARY, ""+NATION_EUROPE);
+        countryTable.addEntry(""+COUNTRY_IRELAND, ""+NATION_EUROPE);
+        countryTable.addEntry(""+COUNTRY_LATVIA, ""+NATION_EUROPE);
+        countryTable.addEntry(""+COUNTRY_LUXEMBOURG, ""+NATION_EUROPE);
+        countryTable.addEntry(""+COUNTRY_MOLDOVIA, ""+NATION_EUROPE);
+        countryTable.addEntry(""+COUNTRY_PORTUGAL, ""+NATION_EUROPE);
+        countryTable.addEntry(""+COUNTRY_SERBIA, ""+NATION_EUROPE);
+        countryTable.addEntry(""+COUNTRY_SLOVENIA, ""+NATION_EUROPE);
+        countryTable.addEntry(""+COUNTRY_UKRAINE, ""+NATION_EUROPE);
     }
     
     private static void addDefaultMiddleEast() {
-        countryTable.addEntry(""+Codes.COUNTRY_QUWAIT, ""+Codes.NATION_MIDDLE_EAST);
-        countryTable.addEntry(""+Codes.COUNTRY_QATAR, ""+Codes.NATION_MIDDLE_EAST);
-        countryTable.addEntry(""+Codes.COUNTRY_IRAN, ""+Codes.NATION_MIDDLE_EAST);
-        countryTable.addEntry(""+Codes.COUNTRY_IRAQ, ""+Codes.NATION_MIDDLE_EAST);
-        countryTable.addEntry(""+Codes.COUNTRY_SAUDI_ARABIA, ""+Codes.NATION_MIDDLE_EAST);
-        countryTable.addEntry(""+Codes.COUNTRY_JORDAN, ""+Codes.NATION_MIDDLE_EAST);
-        countryTable.addEntry(""+Codes.COUNTRY_ISRAEL, ""+Codes.NATION_MIDDLE_EAST);
-        countryTable.addEntry(""+Codes.COUNTRY_SYRIA, ""+Codes.NATION_MIDDLE_EAST);
-        countryTable.addEntry(""+Codes.COUNTRY_AZERBAIJAN, ""+Codes.NATION_MIDDLE_EAST);
-        countryTable.addEntry(""+Codes.COUNTRY_TURKMENISTAN, ""+Codes.NATION_MIDDLE_EAST);
-        countryTable.addEntry(""+Codes.COUNTRY_UNITED_ARAB_EMIRATES, ""+Codes.NATION_MIDDLE_EAST);
-        countryTable.addEntry(""+Codes.COUNTRY_OMAN, ""+Codes.NATION_MIDDLE_EAST);
-        countryTable.addEntry(""+Codes.COUNTRY_YEMEN, ""+Codes.NATION_MIDDLE_EAST);
-        countryTable.addEntry(""+Codes.COUNTRY_AFGHANISTAN, ""+Codes.NATION_MIDDLE_EAST);
-        countryTable.addEntry(""+Codes.COUNTRY_PAKISTAN, ""+Codes.NATION_MIDDLE_EAST);
+        countryTable.addEntry(""+COUNTRY_QUWAIT, ""+NATION_MIDDLE_EAST);
+        countryTable.addEntry(""+COUNTRY_QATAR, ""+NATION_MIDDLE_EAST);
+        countryTable.addEntry(""+COUNTRY_IRAN, ""+NATION_MIDDLE_EAST);
+        countryTable.addEntry(""+COUNTRY_IRAQ, ""+NATION_MIDDLE_EAST);
+        countryTable.addEntry(""+COUNTRY_SAUDI_ARABIA, ""+NATION_MIDDLE_EAST);
+        countryTable.addEntry(""+COUNTRY_JORDAN, ""+NATION_MIDDLE_EAST);
+        countryTable.addEntry(""+COUNTRY_ISRAEL, ""+NATION_MIDDLE_EAST);
+        countryTable.addEntry(""+COUNTRY_SYRIA, ""+NATION_MIDDLE_EAST);
+        countryTable.addEntry(""+COUNTRY_AZERBAIJAN, ""+NATION_MIDDLE_EAST);
+        countryTable.addEntry(""+COUNTRY_TURKMENISTAN, ""+NATION_MIDDLE_EAST);
+        countryTable.addEntry(""+COUNTRY_UNITED_ARAB_EMIRATES, ""+NATION_MIDDLE_EAST);
+        countryTable.addEntry(""+COUNTRY_OMAN, ""+NATION_MIDDLE_EAST);
+        countryTable.addEntry(""+COUNTRY_YEMEN, ""+NATION_MIDDLE_EAST);
+        countryTable.addEntry(""+COUNTRY_AFGHANISTAN, ""+NATION_MIDDLE_EAST);
+        countryTable.addEntry(""+COUNTRY_PAKISTAN, ""+NATION_MIDDLE_EAST);
     }
     
     private static void addDefaultAfrica() {
-        countryTable.addEntry(""+Codes.COUNTRY_ALGERIA, ""+Codes.NATION_AFRICA);
-        countryTable.addEntry(""+Codes.COUNTRY_BURKINA_KASO, ""+Codes.NATION_AFRICA);
-        countryTable.addEntry(""+Codes.COUNTRY_ANGOLA, ""+Codes.NATION_AFRICA);
-        countryTable.addEntry(""+Codes.COUNTRY_BENIN, ""+Codes.NATION_AFRICA);
-        countryTable.addEntry(""+Codes.COUNTRY_BOTSWANA, ""+Codes.NATION_AFRICA);
-        countryTable.addEntry(""+Codes.COUNTRY_BURUNDI, ""+Codes.NATION_AFRICA);
-        countryTable.addEntry(""+Codes.COUNTRY_CAMAROON, ""+Codes.NATION_AFRICA);
-        countryTable.addEntry(""+Codes.COUNTRY_CENTRAL_AFRICAN_REPUBLIC, ""+Codes.NATION_AFRICA);
-        countryTable.addEntry(""+Codes.COUNTRY_CHAD, ""+Codes.NATION_AFRICA);
-        countryTable.addEntry(""+Codes.COUNTRY_COTE_DIVOIRE, ""+Codes.NATION_AFRICA);
-        countryTable.addEntry(""+Codes.COUNTRY_DEMOCRATIC_REPUBLIC_OF_THE_CONGO, ""+Codes.NATION_AFRICA);
-        countryTable.addEntry(""+Codes.COUNTRY_EGYPT, ""+Codes.NATION_AFRICA);
-        countryTable.addEntry(""+Codes.COUNTRY_EQUATORIAL_GUINEA, ""+Codes.NATION_AFRICA);
-        countryTable.addEntry(""+Codes.COUNTRY_ETHIOPIA, ""+Codes.NATION_AFRICA);
-        countryTable.addEntry(""+Codes.COUNTRY_GABON, ""+Codes.NATION_AFRICA);
-        countryTable.addEntry(""+Codes.COUNTRY_GHANA, ""+Codes.NATION_AFRICA);
-        countryTable.addEntry(""+Codes.COUNTRY_GINNEA_BISSAU, ""+Codes.NATION_AFRICA);
-        countryTable.addEntry(""+Codes.COUNTRY_GUINEA, ""+Codes.NATION_AFRICA);
-        countryTable.addEntry(""+Codes.COUNTRY_KENYA, ""+Codes.NATION_AFRICA);
-        countryTable.addEntry(""+Codes.COUNTRY_LESOTHO, ""+Codes.NATION_AFRICA);
-        countryTable.addEntry(""+Codes.COUNTRY_LIBERIA, ""+Codes.NATION_AFRICA);
-        countryTable.addEntry(""+Codes.COUNTRY_LIBYA, ""+Codes.NATION_AFRICA);
-        countryTable.addEntry(""+Codes.COUNTRY_MADAGASCAR, ""+Codes.NATION_AFRICA);
-        countryTable.addEntry(""+Codes.COUNTRY_MALAWI, ""+Codes.NATION_AFRICA);
-        countryTable.addEntry(""+Codes.COUNTRY_MALI, ""+Codes.NATION_AFRICA);
-        countryTable.addEntry(""+Codes.COUNTRY_MAURITANIA, ""+Codes.NATION_AFRICA);
-        countryTable.addEntry(""+Codes.COUNTRY_MOROCCO, ""+Codes.NATION_AFRICA);
-        countryTable.addEntry(""+Codes.COUNTRY_MOZAMBIQUE, ""+Codes.NATION_AFRICA);
-        countryTable.addEntry(""+Codes.COUNTRY_NAMIBIA, ""+Codes.NATION_AFRICA);
-        countryTable.addEntry(""+Codes.COUNTRY_NIGER, ""+Codes.NATION_AFRICA);
-        countryTable.addEntry(""+Codes.COUNTRY_NIGERIA, ""+Codes.NATION_AFRICA);
-        countryTable.addEntry(""+Codes.COUNTRY_REPUBLIC_OF_THE_CONGO, ""+Codes.NATION_AFRICA);
-        countryTable.addEntry(""+Codes.COUNTRY_RWANDA, ""+Codes.NATION_AFRICA);
-        countryTable.addEntry(""+Codes.COUNTRY_SENEGAL, ""+Codes.NATION_AFRICA);
-        countryTable.addEntry(""+Codes.COUNTRY_SIERRA_LEONE, ""+Codes.NATION_AFRICA);
-        countryTable.addEntry(""+Codes.COUNTRY_SOMALIA, ""+Codes.NATION_AFRICA);
-        countryTable.addEntry(""+Codes.COUNTRY_SOUTH_AFRICA, ""+Codes.NATION_AFRICA);
-        countryTable.addEntry(""+Codes.COUNTRY_SUDAN, ""+Codes.NATION_AFRICA);
-        countryTable.addEntry(""+Codes.COUNTRY_TANZANIA, ""+Codes.NATION_AFRICA);
-        countryTable.addEntry(""+Codes.COUNTRY_TOGO, ""+Codes.NATION_AFRICA);
-        countryTable.addEntry(""+Codes.COUNTRY_TUNISIA, ""+Codes.NATION_AFRICA);
-        countryTable.addEntry(""+Codes.COUNTRY_UGANDA, ""+Codes.NATION_AFRICA);
-        countryTable.addEntry(""+Codes.COUNTRY_WESTERN_SAHARA, ""+Codes.NATION_AFRICA);
-        countryTable.addEntry(""+Codes.COUNTRY_ZAMBIA, ""+Codes.NATION_AFRICA);
-        countryTable.addEntry(""+Codes.COUNTRY_ZIMBABWE, ""+Codes.NATION_AFRICA);
+        countryTable.addEntry(""+COUNTRY_ALGERIA, ""+NATION_AFRICA);
+        countryTable.addEntry(""+COUNTRY_BURKINA_KASO, ""+NATION_AFRICA);
+        countryTable.addEntry(""+COUNTRY_ANGOLA, ""+NATION_AFRICA);
+        countryTable.addEntry(""+COUNTRY_BENIN, ""+NATION_AFRICA);
+        countryTable.addEntry(""+COUNTRY_BOTSWANA, ""+NATION_AFRICA);
+        countryTable.addEntry(""+COUNTRY_BURUNDI, ""+NATION_AFRICA);
+        countryTable.addEntry(""+COUNTRY_CAMAROON, ""+NATION_AFRICA);
+        countryTable.addEntry(""+COUNTRY_CENTRAL_AFRICAN_REPUBLIC, ""+NATION_AFRICA);
+        countryTable.addEntry(""+COUNTRY_CHAD, ""+NATION_AFRICA);
+        countryTable.addEntry(""+COUNTRY_COTE_DIVOIRE, ""+NATION_AFRICA);
+        countryTable.addEntry(""+COUNTRY_DEMOCRATIC_REPUBLIC_OF_THE_CONGO, ""+NATION_AFRICA);
+        countryTable.addEntry(""+COUNTRY_EGYPT, ""+NATION_AFRICA);
+        countryTable.addEntry(""+COUNTRY_EQUATORIAL_GUINEA, ""+NATION_AFRICA);
+        countryTable.addEntry(""+COUNTRY_ETHIOPIA, ""+NATION_AFRICA);
+        countryTable.addEntry(""+COUNTRY_GABON, ""+NATION_AFRICA);
+        countryTable.addEntry(""+COUNTRY_GHANA, ""+NATION_AFRICA);
+        countryTable.addEntry(""+COUNTRY_GINNEA_BISSAU, ""+NATION_AFRICA);
+        countryTable.addEntry(""+COUNTRY_GUINEA, ""+NATION_AFRICA);
+        countryTable.addEntry(""+COUNTRY_KENYA, ""+NATION_AFRICA);
+        countryTable.addEntry(""+COUNTRY_LESOTHO, ""+NATION_AFRICA);
+        countryTable.addEntry(""+COUNTRY_LIBERIA, ""+NATION_AFRICA);
+        countryTable.addEntry(""+COUNTRY_LIBYA, ""+NATION_AFRICA);
+        countryTable.addEntry(""+COUNTRY_MADAGASCAR, ""+NATION_AFRICA);
+        countryTable.addEntry(""+COUNTRY_MALAWI, ""+NATION_AFRICA);
+        countryTable.addEntry(""+COUNTRY_MALI, ""+NATION_AFRICA);
+        countryTable.addEntry(""+COUNTRY_MAURITANIA, ""+NATION_AFRICA);
+        countryTable.addEntry(""+COUNTRY_MOROCCO, ""+NATION_AFRICA);
+        countryTable.addEntry(""+COUNTRY_MOZAMBIQUE, ""+NATION_AFRICA);
+        countryTable.addEntry(""+COUNTRY_NAMIBIA, ""+NATION_AFRICA);
+        countryTable.addEntry(""+COUNTRY_NIGER, ""+NATION_AFRICA);
+        countryTable.addEntry(""+COUNTRY_NIGERIA, ""+NATION_AFRICA);
+        countryTable.addEntry(""+COUNTRY_REPUBLIC_OF_THE_CONGO, ""+NATION_AFRICA);
+        countryTable.addEntry(""+COUNTRY_RWANDA, ""+NATION_AFRICA);
+        countryTable.addEntry(""+COUNTRY_SENEGAL, ""+NATION_AFRICA);
+        countryTable.addEntry(""+COUNTRY_SIERRA_LEONE, ""+NATION_AFRICA);
+        countryTable.addEntry(""+COUNTRY_SOMALIA, ""+NATION_AFRICA);
+        countryTable.addEntry(""+COUNTRY_SOUTH_AFRICA, ""+NATION_AFRICA);
+        countryTable.addEntry(""+COUNTRY_SUDAN, ""+NATION_AFRICA);
+        countryTable.addEntry(""+COUNTRY_TANZANIA, ""+NATION_AFRICA);
+        countryTable.addEntry(""+COUNTRY_TOGO, ""+NATION_AFRICA);
+        countryTable.addEntry(""+COUNTRY_TUNISIA, ""+NATION_AFRICA);
+        countryTable.addEntry(""+COUNTRY_UGANDA, ""+NATION_AFRICA);
+        countryTable.addEntry(""+COUNTRY_WESTERN_SAHARA, ""+NATION_AFRICA);
+        countryTable.addEntry(""+COUNTRY_ZAMBIA, ""+NATION_AFRICA);
+        countryTable.addEntry(""+COUNTRY_ZIMBABWE, ""+NATION_AFRICA);
     }
     
     private static void addDefaultAmericana() {
-        countryTable.addEntry(""+Codes.COUNTRY_UNITED_STATES, ""+Codes.NATION_AMERICANA);
-        countryTable.addEntry(""+Codes.COUNTRY_CANADA, ""+Codes.NATION_AMERICANA);
-        countryTable.addEntry(""+Codes.COUNTRY_ALASKA, ""+Codes.NATION_AMERICANA);
-        countryTable.addEntry(""+Codes.COUNTRY_MEXICO, ""+Codes.NATION_AMERICANA);
-        countryTable.addEntry(""+Codes.COUNTRY_GREENLAND, ""+Codes.NATION_AMERICANA);
-        countryTable.addEntry(""+Codes.COUNTRY_ICELAND, ""+Codes.NATION_AMERICANA);
-        countryTable.addEntry(""+Codes.COUNTRY_GUATEMALA, ""+Codes.NATION_AMERICANA);
-        countryTable.addEntry(""+Codes.COUNTRY_HONDURAS, ""+Codes.NATION_AMERICANA);
-        countryTable.addEntry(""+Codes.COUNTRY_NICARAGUA, ""+Codes.NATION_AMERICANA);
-        countryTable.addEntry(""+Codes.COUNTRY_COSTA_RICA, ""+Codes.NATION_AMERICANA);
-        countryTable.addEntry(""+Codes.COUNTRY_PANAMA, ""+Codes.NATION_AMERICANA);
+        countryTable.addEntry(""+COUNTRY_UNITED_STATES, ""+NATION_AMERICANA);
+        countryTable.addEntry(""+COUNTRY_CANADA, ""+NATION_AMERICANA);
+        countryTable.addEntry(""+COUNTRY_ALASKA, ""+NATION_AMERICANA);
+        countryTable.addEntry(""+COUNTRY_MEXICO, ""+NATION_AMERICANA);
+        countryTable.addEntry(""+COUNTRY_GREENLAND, ""+NATION_AMERICANA);
+        countryTable.addEntry(""+COUNTRY_ICELAND, ""+NATION_AMERICANA);
+        countryTable.addEntry(""+COUNTRY_GUATEMALA, ""+NATION_AMERICANA);
+        countryTable.addEntry(""+COUNTRY_HONDURAS, ""+NATION_AMERICANA);
+        countryTable.addEntry(""+COUNTRY_NICARAGUA, ""+NATION_AMERICANA);
+        countryTable.addEntry(""+COUNTRY_COSTA_RICA, ""+NATION_AMERICANA);
+        countryTable.addEntry(""+COUNTRY_PANAMA, ""+NATION_AMERICANA);
     }
     
     private static void addDefaultAustralasia() {
-        countryTable.addEntry(""+Codes.COUNTRY_AUSTRALIA, ""+Codes.NATION_AUSTRALASIA);
-        countryTable.addEntry(""+Codes.COUNTRY_NEW_ZEALAND, ""+Codes.NATION_AUSTRALASIA);
-        countryTable.addEntry(""+Codes.COUNTRY_PAPUA_NEW_GUINEA, ""+Codes.NATION_AUSTRALASIA);
-        countryTable.addEntry(""+Codes.COUNTRY_INDONESIA, ""+Codes.NATION_AUSTRALASIA);
-        countryTable.addEntry(""+Codes.COUNTRY_MALAYSIA, ""+Codes.NATION_AUSTRALASIA);
-        countryTable.addEntry(""+Codes.COUNTRY_PHILIPPINES, ""+Codes.NATION_AUSTRALASIA);
+        countryTable.addEntry(""+COUNTRY_AUSTRALIA, ""+NATION_AUSTRALASIA);
+        countryTable.addEntry(""+COUNTRY_NEW_ZEALAND, ""+NATION_AUSTRALASIA);
+        countryTable.addEntry(""+COUNTRY_PAPUA_NEW_GUINEA, ""+NATION_AUSTRALASIA);
+        countryTable.addEntry(""+COUNTRY_INDONESIA, ""+NATION_AUSTRALASIA);
+        countryTable.addEntry(""+COUNTRY_MALAYSIA, ""+NATION_AUSTRALASIA);
+        countryTable.addEntry(""+COUNTRY_PHILIPPINES, ""+NATION_AUSTRALASIA);
     }
     
     private static void addDefaultChina() {
-        countryTable.addEntry(""+Codes.COUNTRY_CHINA, ""+Codes.NATION_CHINA);
-        countryTable.addEntry(""+Codes.COUNTRY_TAIWAN, ""+Codes.NATION_CHINA);
-        countryTable.addEntry(""+Codes.COUNTRY_INDIA, ""+Codes.NATION_CHINA);
-        countryTable.addEntry(""+Codes.COUNTRY_THAILAND, ""+Codes.NATION_CHINA);
-        countryTable.addEntry(""+Codes.COUNTRY_VIETNAM, ""+Codes.NATION_CHINA);
-        countryTable.addEntry(""+Codes.COUNTRY_BURMA, ""+Codes.NATION_CHINA);
-        countryTable.addEntry(""+Codes.COUNTRY_BANGLADESH, ""+Codes.NATION_CHINA);
-        countryTable.addEntry(""+Codes.COUNTRY_CAMBODIA, ""+Codes.NATION_CHINA);
-        countryTable.addEntry(""+Codes.COUNTRY_SOUTH_KOREA, ""+Codes.NATION_CHINA);
-        countryTable.addEntry(""+Codes.COUNTRY_NORTH_KOREA, ""+Codes.NATION_CHINA);
-        countryTable.addEntry(""+Codes.COUNTRY_JAPAN, ""+Codes.NATION_CHINA);
+        countryTable.addEntry(""+COUNTRY_CHINA, ""+NATION_CHINA);
+        countryTable.addEntry(""+COUNTRY_TAIWAN, ""+NATION_CHINA);
+        countryTable.addEntry(""+COUNTRY_INDIA, ""+NATION_CHINA);
+        countryTable.addEntry(""+COUNTRY_THAILAND, ""+NATION_CHINA);
+        countryTable.addEntry(""+COUNTRY_VIETNAM, ""+NATION_CHINA);
+        countryTable.addEntry(""+COUNTRY_BURMA, ""+NATION_CHINA);
+        countryTable.addEntry(""+COUNTRY_BANGLADESH, ""+NATION_CHINA);
+        countryTable.addEntry(""+COUNTRY_CAMBODIA, ""+NATION_CHINA);
+        countryTable.addEntry(""+COUNTRY_SOUTH_KOREA, ""+NATION_CHINA);
+        countryTable.addEntry(""+COUNTRY_NORTH_KOREA, ""+NATION_CHINA);
+        countryTable.addEntry(""+COUNTRY_JAPAN, ""+NATION_CHINA);
     }
     
     private static void addDefaultSouthAmerica() {
-        countryTable.addEntry(""+Codes.COUNTRY_ARGENTINA, ""+Codes.NATION_SOUTH_AMERICA);
-        countryTable.addEntry(""+Codes.COUNTRY_BOLIVIA, ""+Codes.NATION_SOUTH_AMERICA);
-        countryTable.addEntry(""+Codes.COUNTRY_BRAZIL, ""+Codes.NATION_SOUTH_AMERICA);
-        countryTable.addEntry(""+Codes.COUNTRY_CHILE, ""+Codes.NATION_SOUTH_AMERICA);
-        countryTable.addEntry(""+Codes.COUNTRY_COLOMBIA, ""+Codes.NATION_SOUTH_AMERICA);
-        countryTable.addEntry(""+Codes.COUNTRY_ECUADOR, ""+Codes.NATION_SOUTH_AMERICA);
-        countryTable.addEntry(""+Codes.COUNTRY_FRENCH_GUIANA, ""+Codes.NATION_SOUTH_AMERICA);
-        countryTable.addEntry(""+Codes.COUNTRY_GUYANA, ""+Codes.NATION_SOUTH_AMERICA);
-        countryTable.addEntry(""+Codes.COUNTRY_PARAGUAY, ""+Codes.NATION_SOUTH_AMERICA);
-        countryTable.addEntry(""+Codes.COUNTRY_PERU, ""+Codes.NATION_SOUTH_AMERICA);
-        countryTable.addEntry(""+Codes.COUNTRY_SURINAME, ""+Codes.NATION_SOUTH_AMERICA);
-        countryTable.addEntry(""+Codes.COUNTRY_URUGUAY, ""+Codes.NATION_SOUTH_AMERICA);
-        countryTable.addEntry(""+Codes.COUNTRY_VENEZUELA, ""+Codes.NATION_SOUTH_AMERICA);
+        countryTable.addEntry(""+COUNTRY_ARGENTINA, ""+NATION_SOUTH_AMERICA);
+        countryTable.addEntry(""+COUNTRY_BOLIVIA, ""+NATION_SOUTH_AMERICA);
+        countryTable.addEntry(""+COUNTRY_BRAZIL, ""+NATION_SOUTH_AMERICA);
+        countryTable.addEntry(""+COUNTRY_CHILE, ""+NATION_SOUTH_AMERICA);
+        countryTable.addEntry(""+COUNTRY_COLOMBIA, ""+NATION_SOUTH_AMERICA);
+        countryTable.addEntry(""+COUNTRY_ECUADOR, ""+NATION_SOUTH_AMERICA);
+        countryTable.addEntry(""+COUNTRY_FRENCH_GUIANA, ""+NATION_SOUTH_AMERICA);
+        countryTable.addEntry(""+COUNTRY_GUYANA, ""+NATION_SOUTH_AMERICA);
+        countryTable.addEntry(""+COUNTRY_PARAGUAY, ""+NATION_SOUTH_AMERICA);
+        countryTable.addEntry(""+COUNTRY_PERU, ""+NATION_SOUTH_AMERICA);
+        countryTable.addEntry(""+COUNTRY_SURINAME, ""+NATION_SOUTH_AMERICA);
+        countryTable.addEntry(""+COUNTRY_URUGUAY, ""+NATION_SOUTH_AMERICA);
+        countryTable.addEntry(""+COUNTRY_VENEZUELA, ""+NATION_SOUTH_AMERICA);
     }
 }
