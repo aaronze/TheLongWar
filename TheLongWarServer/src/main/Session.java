@@ -46,8 +46,16 @@ public class Session extends Thread {
             
             if (command == Codes.REQUEST_GET_CURRENT_STATE) {
                 int[] stream = DataManager.toDataStream();
-                String packet = ""+Codes.REQUEST_GET_CURRENT_STATE+" ";
+                String packet = "";
                 for (int i : stream) packet += i + " ";
+                out.println(packet);
+            }
+            
+            if (command == Codes.REQUEST_GET_NATION_INFO) {
+                String packet = "";
+                for (String[] s : DataManager.nationTable.getEntries()) {
+                    packet += s[0] + ":" + s[1] + ":" + s[2] + ";";
+                }
                 out.println(packet);
             }
             

@@ -11,6 +11,8 @@ import java.net.*;
  */
 public class Network {
     private static Socket socket;
+    private static BufferedReader in;
+    private static PrintWriter out;
     
     private final static String host = "192.168.0.99";
     private final static int port = 2574;
@@ -27,15 +29,8 @@ public class Network {
                     socket = new Socket(host, port);
                     System.out.println("Connected!");
                     
-                    PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-                    BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                    BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
-                    
-                    String userInput;
-                    while ((userInput = stdIn.readLine()) != null) {
-                        out.println(userInput);
-                        System.out.println("echo: " + in.readLine());
-                    }
+                    out = new PrintWriter(socket.getOutputStream(), true);
+                    in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -43,5 +38,16 @@ public class Network {
         };
         
         connection.start();
+    }
+    
+    public static String request(String packet) {
+        try {
+            out.println(packet);
+            return in.readLine();
+        } catch (Exception e) {
+            System.err.println("Network Error");
+            e.printStackTrace();
+            return "";
+        }
     }
 }
