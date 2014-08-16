@@ -67,6 +67,7 @@ public class Handle {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            return false;
         }
         
         packet = Network.request(""+Codes.REQUEST_GET_CURRENT_STATE);
