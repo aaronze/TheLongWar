@@ -14,7 +14,7 @@ public class Network {
     private static BufferedReader in;
     private static PrintWriter out;
     
-    private final static String host = "127.0.0.1";//192.168.0.99";
+    private final static String host = "192.168.0.99";
     private final static int port = 2574;
     
     /**
