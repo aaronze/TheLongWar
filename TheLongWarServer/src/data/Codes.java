@@ -10,7 +10,6 @@ public class Codes {
     public final static int REQUEST_ATTACK = 4;
     
     public static int toCode(int nation, int country) {
-        System.out.println(nation + ", " + country + " -> " + (getNation(nation) | getCountry(country)));
         return getNation(nation) | getCountry(country);
     }
     

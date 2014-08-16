@@ -58,3 +58,7 @@ $RECYCLE.BIN/
 /MapStitcher/nbproject/private/
 /MapStitcher/build/
 /TheLongWarClient/dist/
+TheLongWarServer/captureTable.dab
+TheLongWarServer/countryTable.dab
+TheLongWarServer/log.txt
+TheLongWarServer/countryTable.dab

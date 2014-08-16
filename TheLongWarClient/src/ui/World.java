@@ -213,31 +213,33 @@ public class World extends JPanel {
     
     private ArrayList<Nation> nations;
     public void buildAllianceOverlay() {
-        Handle.updateNations();
-        nations = Handle.getNations();
-        
-        int backgroundColor = new Color(0, 0, 0, 0).getRGB();
-        
-        double stepX = 1.0 / getWidth();
-        double stepY = 1.0 / getHeight();
-        
-        if (allianceViewType == ALLIANCE_VIEW) {
-            // For each pixel, if it represents a country look up it's nation. Color code appropriately.
-            for (int x = 0; x < allianceOverlay.getWidth(); x++) {
-                for (int y = 0; y < allianceOverlay.getHeight(); y++) {
-                    String country = getCountryAt(x * stepX, y * stepY);
-                    
-                    int color = backgroundColor;
-                    
-                    if (!country.isEmpty()) {
-                        for (Nation nation : nations) {
-                            if (nation.contains(country)) {
-                                color = (nation.getTexture().getColorAt(x, y) & 0xFFFFFF) | (160 << 24);
+        // Only rebuild layer if there are changes
+        if (Handle.updateNations()) {
+            nations = Handle.getNations();
+
+            int backgroundColor = new Color(0, 0, 0, 0).getRGB();
+
+            double stepX = 1.0 / getWidth();
+            double stepY = 1.0 / getHeight();
+
+            if (allianceViewType == ALLIANCE_VIEW) {
+                // For each pixel, if it represents a country look up it's nation. Color code appropriately.
+                for (int x = 0; x < allianceOverlay.getWidth(); x++) {
+                    for (int y = 0; y < allianceOverlay.getHeight(); y++) {
+                        String country = getCountryAt(x * stepX, y * stepY);
+
+                        int color = backgroundColor;
+
+                        if (!country.isEmpty()) {
+                            for (Nation nation : nations) {
+                                if (nation.contains(country)) {
+                                    color = (nation.getTexture().getColorAt(x, y) & 0xFFFFFF) | (160 << 24);
+                                }
                             }
                         }
+
+                        allianceOverlay.setRGB(x, y, color);
                     }
-                    
-                    allianceOverlay.setRGB(x, y, color);
                 }
             }
         }

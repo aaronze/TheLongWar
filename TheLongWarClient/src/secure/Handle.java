@@ -42,7 +42,16 @@ public class Handle {
         return fakeOwner;
     }
     
-    public static void buildNations() {
+    /**
+     * Returns true if nation data received is visually different and should cause
+     * a rebuild of the countries overlay layer.
+     * 
+     * @return True if nation data is different from last update.
+     */
+    public static boolean buildNations() {
+        int lastHash = 0;
+        if (nations != null) lastHash = hash(nations);
+        
         lastUpdated = new Date().getTime();
         nations = new ArrayList<>();
         
@@ -79,10 +88,15 @@ public class Handle {
             }
             nat.add(country);
         }
+        
+        int hash = hash(nations);
+        
+        return lastHash != hash;
     }
     
-    public static void updateNations() {
-        if (nations == null) {
+    public static boolean updateNations() {
+        return buildNations();
+        /*if (nations == null) {
             buildNations();
         }
         
@@ -91,10 +105,23 @@ public class Handle {
         
         String packet = Network.request(Codes.REQUEST_GET_CHANGES_SINCE + " " + time);
         
-        System.out.println(packet);
+        System.out.println(packet);*/
     }
     
     public static ArrayList<Nation> getNations() {
         return nations;
+    }
+    
+    private static int hash(ArrayList<Nation> nations) {
+        int sum = 0;
+        
+        for (int i = 0; i < nations.size(); i++) {
+            Nation nation = nations.get(i);
+            for (String country : nation.ownedCountries) {
+                sum += (i + 1) * country.length();
+            }
+        }
+        
+        return sum;
     }
 }
