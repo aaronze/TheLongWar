@@ -41,13 +41,20 @@ public class Network {
     }
     
     public static String request(String packet) {
+        long start = System.nanoTime();
+        String output = "";
         try {
             out.println(packet);
-            return in.readLine();
+            output = in.readLine();
         } catch (Exception e) {
             System.err.println("Network Error");
             e.printStackTrace();
-            return "";
         }
+        long end = System.nanoTime();
+        
+        long dur = end - start;
+        System.out.println("Request [" + packet + "]" + " took " + dur / 1000000000.0 + " seconds");
+        
+        return output;
     }
 }

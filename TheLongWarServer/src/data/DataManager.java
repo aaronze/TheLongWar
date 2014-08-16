@@ -14,12 +14,21 @@ public class DataManager {
     public static Table countryTable;
     public static Table nationTable;
     
+    public static Table userTable;
+    
     public static Table captureTable;
     
     public static Table unitTable;
     public static Table spellTable;
     
     static {
+        userTable = Database.getTable("userTable");
+        if (userTable == null) {
+            userTable = new HardTable("userTable");
+            Database.addTable(userTable);
+            userTable.addRows("UserName", "UserSalt", "UserPassword", "UserEmail");
+        }
+        
         countryTable = Database.getTable("countryTable");
         if (countryTable == null) {
             countryTable = new HardTable("countryTable");
