@@ -25,7 +25,16 @@ public class Handle {
     public static long lastUpdated = new Date().getTime();
 
     public static void capture(String fromCountry, String fromNation, String toCountry, String toNation) {
-        Network.request("" + Codes.REQUEST_ATTACK + " " + Codes.toCode(fromCountry, fromNation) + " " + Codes.toCode(toCountry, toNation));
+        String packet = "";
+        
+        packet += Codes.REQUEST_ATTACK + " ";
+        packet += Network.username + " ";
+        packet += Network.session + " ";
+        packet += Codes.toCode(fromCountry, fromNation) + " ";
+        packet += Codes.toCode(toCountry, toNation);
+        
+        String response = Network.request(packet);
+        System.out.println(response);
     }
     
     public static ArrayList<String> getOwner(String country) {

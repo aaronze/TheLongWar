@@ -1,5 +1,6 @@
 package main;
 
+import data.Account;
 import data.Codes;
 import data.DataManager;
 import data.Log;
@@ -86,19 +87,52 @@ public class Session extends Thread {
             }
             
             if (command == Codes.REQUEST_ATTACK) {
+                // Inputs: Username, Session, Attacker, Defender
+                // Outputs: Success or Fail
+                
                 String[] data = line.substring(2).split(" ");
                 
-                int attacker = Integer.parseInt(data[0]);
-                int defender = Integer.parseInt(data[1]);
+                String username = data[0];
+                String session = data[1];
                 
-                DataManager.captureTable.addEntry(DataManager.captureTable.nextID(), ""+new Date().getTime(), ""+attacker, ""+defender);
+                // Check if user has authentication to do this action
+                if (Account.reauthorize(username, session) == null) {
+                    // User was not authorized
+                    out.println(""+Codes.RESPONSE_NOT_AUTHORIZED);
+                } else {
+                    int attacker = Integer.parseInt(data[2]);
+                    int defender = Integer.parseInt(data[3]);
+
+                    DataManager.captureTable.addEntry(DataManager.captureTable.nextID(), ""+new Date().getTime(), ""+attacker, ""+defender);
+
+                    int capturingNation = Codes.getNation(attacker);
+                    int capturedCountry = Codes.getCountry(defender);
+
+                    DataManager.countryTable.updateEntry("CountryName", ""+capturedCountry, "CountryOwner", ""+capturingNation);
+
+                    out.println(""+Codes.RESPONSE_SUCCESS);
+                }
+            }
+            
+            if (command == Codes.REQUEST_AUTHORIZATION) {
+                // Inputs: Username, Password
+                // Outputs: Session Token
                 
-                int capturingNation = Codes.getNation(attacker);
-                int capturedCountry = Codes.getCountry(defender);
+                String[] inputs = line.substring(2).split(" ");
                 
-                DataManager.countryTable.updateEntry("CountryName", ""+capturedCountry, "CountryOwner", ""+capturingNation);
+                String username = inputs[0];
+                String password = inputs[1];
                 
-                out.println(""+Codes.REQUEST_ATTACK);
+                String session = Account.authorize(username, password);
+                
+                // Session is null if authorization failed
+                if (session == null) {
+                    String output = ""+Codes.RESPONSE_FAIL;
+                    out.println(output);
+                } else {
+                    String output = ""+Codes.RESPONSE_SUCCESS + " " + session;
+                    out.println(output);
+                }
             }
             
         } catch (Exception e) {

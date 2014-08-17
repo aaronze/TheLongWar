@@ -8,6 +8,10 @@ public class Codes {
     public final static int REQUEST_GET_CURRENT_STATE = 2;
     public final static int REQUEST_GET_NATION_INFO = 3;
     public final static int REQUEST_ATTACK = 4;
+    public final static int REQUEST_AUTHORIZATION = 5;
+    public final static int RESPONSE_FAIL = 6;
+    public final static int RESPONSE_SUCCESS = 7;
+    public final static int RESPONSE_NOT_AUTHORIZED = 8;
     
     public static int toCode(int nation, int country) {
         return getNation(nation) | getCountry(country);

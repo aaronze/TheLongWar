@@ -19,10 +19,6 @@ public class Account {
     
     public static String applicationSalt = "abcdefghijklmnopqrstuvwxyz";
     
-    public static void main(String[] args) {
-        
-    }
-    
     static {
         // Load application salt
         File fileSalt = new File("server_salt.txt");

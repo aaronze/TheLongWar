@@ -1,5 +1,6 @@
 package secure;
 
+import data.Codes;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -13,6 +14,9 @@ public class Network {
     private static Socket socket;
     private static BufferedReader in;
     private static PrintWriter out;
+    
+    public static String username;
+    public static String session;
     
     private final static String host = "192.168.0.99";
     private final static int port = 2574;
@@ -31,6 +35,19 @@ public class Network {
                     
                     out = new PrintWriter(socket.getOutputStream(), true);
                     in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                    
+                    System.out.println("Attempting authorization handshake");
+                    
+                    username = "Storms";
+                    String sessionResponse = request(""+Codes.REQUEST_AUTHORIZATION + " Storms Everquest1");
+                    String[] responseTokens = sessionResponse.split(" ");
+                    
+                    if (responseTokens[0].equals(""+Codes.RESPONSE_SUCCESS)) {
+                        session = responseTokens[1];
+                        System.out.println("Sucessfully logged in");
+                    } else {
+                        System.out.println("Failed with error code: " + sessionResponse);
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
