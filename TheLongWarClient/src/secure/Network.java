@@ -36,6 +36,10 @@ public class Network {
                     out = new PrintWriter(socket.getOutputStream(), true);
                     in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                     
+                    System.out.println("Attempting registration");
+                    String registrationResponse = request(""+Codes.REQUEST_REGISTER + " Storms Everquest1 aaron.kison@gmail.com");
+                    System.out.println(registrationResponse);
+                    
                     System.out.println("Attempting authorization handshake");
                     
                     username = "Storms";

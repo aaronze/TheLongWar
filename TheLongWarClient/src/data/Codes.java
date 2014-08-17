@@ -12,6 +12,7 @@ public class Codes {
     public final static int RESPONSE_FAIL = 6;
     public final static int RESPONSE_SUCCESS = 7;
     public final static int RESPONSE_NOT_AUTHORIZED = 8;
+    public final static int REQUEST_REGISTER = 9;
     
     public static int toCode(int nation, int country) {
         return getNation(nation) | getCountry(country);

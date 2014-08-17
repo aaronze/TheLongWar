@@ -135,6 +135,25 @@ public class Session extends Thread {
                 }
             }
             
+            if (command == Codes.REQUEST_REGISTER) {
+                // Inputs: Username, Password, Email
+                // Outputs: Success or Fail
+                
+                String[] inputs = line.substring(2).split(" ");
+                
+                String username = inputs[0];
+                String password = inputs[1];
+                String email = inputs[2];
+                
+                boolean success = Account.register(username, password, email);
+                
+                if (success) {
+                    out.println(""+Codes.RESPONSE_SUCCESS);
+                } else {
+                    out.println(""+Codes.RESPONSE_FAIL);
+                }
+            }
+            
         } catch (Exception e) {
             Log.log("Error in request: [" + line + "]");
             e.printStackTrace();
