@@ -5,7 +5,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.math.BigInteger;
 import java.net.*;
+import java.security.MessageDigest;
 
 /**
  * @author Aaron
@@ -35,23 +37,6 @@ public class Network {
                     
                     out = new PrintWriter(socket.getOutputStream(), true);
                     in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                    
-                    System.out.println("Attempting registration");
-                    String registrationResponse = request(""+Codes.REQUEST_REGISTER + " Storms Everquest1 aaron.kison@gmail.com");
-                    System.out.println(registrationResponse);
-                    
-                    System.out.println("Attempting authorization handshake");
-                    
-                    username = "Storms";
-                    String sessionResponse = request(""+Codes.REQUEST_AUTHORIZATION + " Storms Everquest1");
-                    String[] responseTokens = sessionResponse.split(" ");
-                    
-                    if (responseTokens[0].equals(""+Codes.RESPONSE_SUCCESS)) {
-                        session = responseTokens[1];
-                        System.out.println("Sucessfully logged in");
-                    } else {
-                        System.out.println("Failed with error code: " + sessionResponse);
-                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -77,5 +62,27 @@ public class Network {
         System.out.println("Request [" + packet + "]" + " took " + dur / 1000000000.0 + " seconds");
         
         return output;
+    }
+    
+    public static String md5(String input) {
+        String md5 = "";
+         
+        if(null == input) 
+            return "";
+         
+        try {
+            //Create MessageDigest object for MD5
+            MessageDigest digest = MessageDigest.getInstance("MD5");
+
+            //Update input string in message digest
+            digest.update(input.getBytes(), 0, input.length());
+
+            //Converts message digest value in base 16 (hex) 
+            md5 = new BigInteger(1, digest.digest()).toString(16);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return md5;
     }
 }

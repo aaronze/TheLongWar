@@ -1,8 +1,10 @@
 package ui;
 
 import data.Codes;
+import java.awt.Graphics;
 import java.util.Date;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import secure.Network;
 
 /**
@@ -13,6 +15,8 @@ public class Home extends JFrame {
         new Home();
     }
     
+    JPanel login = new Login();
+    
     public Home() {
         Network.connect();
         
@@ -22,6 +26,7 @@ public class Home extends JFrame {
         
         World world = new World();
         add(world);
+        add(login);
         
         long timer = 0;
         while (true) {
@@ -40,4 +45,6 @@ public class Home extends JFrame {
             timer += time - previous;
         }
     }
+    
+    
 }
