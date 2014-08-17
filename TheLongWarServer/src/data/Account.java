@@ -32,6 +32,7 @@ public class Account {
                 
                 applicationSalt = "";
                 for (int i = 0; i < 32; i++) applicationSalt += (char)(int)(Math.random()*100 + 30);
+                applicationSalt = applicationSalt.replaceAll(" ", "_");
                 
                 writer.println(applicationSalt);
                 writer.close();
@@ -122,6 +123,7 @@ public class Account {
         // Create a new account with a new session id
         String sessionToken = "";
         for (int i = 0; i < 32; i++) sessionToken += (char)(int)(Math.random()*100 + 30);
+        sessionToken = sessionToken.replaceAll(" ", "_");
         
         Account account = new Account(username, sessionToken);
         authorizedPlayers.add(account);
@@ -139,11 +141,10 @@ public class Account {
         // Generate user salt
         String userSalt = "";
         for (int i = 0; i < 32; i++) userSalt += (char)(int)(Math.random()*100 + 30);
+        userSalt = userSalt.replaceAll(" ", "_");
         
         // Get md5-salted password
         String saltedPassword = md5(password + applicationSalt + userSalt);
-        
-        System.out.println(password + applicationSalt + userSalt + " -> " + saltedPassword);
         
         DataManager.userTable.addEntry(username, userSalt, saltedPassword, email);
         
