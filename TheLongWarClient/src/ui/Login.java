@@ -170,6 +170,7 @@ public class Login extends javax.swing.JPanel {
             Network.username = txtUsername.getText();
             session = responseTokens[1];
             System.out.println("Sucessfully logged in");
+            setVisible(false);
         } else {
             System.out.println("Failed with error code: " + sessionResponse);
         }

@@ -21,10 +21,15 @@ public class Home extends JFrame {
     JPanel login = new Login();
     
     public Home() {
+        for (int i = 60; i < 110; i++) {
+            System.out.print((char)i);
+        }
+        
         Mixer.register(new Audio(Resources.getResource("bgmusicloop.wav"), "background"));
         Mixer.loop("background");
         
         Network.connect();
+        Network.request(""+Codes.REQUEST_REGISTER + " Storms " + Network.md5("Everquest1") + " aaron.kison@gmail.com");
         
         setSize(1024, 768);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
