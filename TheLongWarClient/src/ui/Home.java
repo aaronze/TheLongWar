@@ -1,11 +1,14 @@
 package ui;
 
+import audio.Audio;
+import audio.Mixer;
 import data.Codes;
 import java.awt.Graphics;
 import java.util.Date;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import secure.Network;
+import secure.Resources;
 
 /**
  * @author Aaron
@@ -18,6 +21,9 @@ public class Home extends JFrame {
     JPanel login = new Login();
     
     public Home() {
+        Mixer.register(new Audio(Resources.getResource("bgmusicloop.wav"), "background"));
+        Mixer.loop("background");
+        
         Network.connect();
         
         setSize(1024, 768);
