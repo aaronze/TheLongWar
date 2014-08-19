@@ -165,7 +165,7 @@ public class Session extends Thread {
                 // Outputs: File if valid file
                 
                 String filename = line.substring(line.indexOf(" ")+1);
-                File file = new File(filename);
+                File file = new File("sync/" + filename);
                 
                 if (FileManifest.isInManifest(file.getName())) {
                     out.println(""+Codes.RESPONSE_SUCCESS);
