@@ -1,0 +1,12 @@
+088ebd60b78141d55242d445785047b4 africa.png
+05ae51e3134a8d415466b3322306c7be australasia.png
+8b4108e98adde43b69e4bd6a6450977a bgmusicloop.wav
+7b657875016debfaa730982e4df7dfcd china.png
+c7bb89509ad255e6e45511eaccab3002 codes.txt
+8b976f0feac4bf6f459ce1f2f87a2b96 countries.png
+84959096cffa149bfbc6fb4d79d949da europe.png
+059a51ee22597f800a1516870aa92a0a middleeast.png
+c192d78f529a0e34960af639d59283bf russia.png
+bc9b7aef88cfed6bafd0a6b70c5e51bf southamerica.png
+14497c1eb09a791c2ad871752c9c1f80 usa.png
+667aa1e3146909b022e85e0c7f3d002a world.jpg

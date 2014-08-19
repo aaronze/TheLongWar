@@ -1,0 +1,150 @@
+Algeria:128,243,31
+Angola:254,1,252
+Benin:103,238,8
+Botswana:6,59,210
+Burkina Faso:175,140,104
+Burundi:240,174,85
+Camaroon:59,32,224
+Central African Republic:28,251,3
+Chad:215,4,247
+Cote d'Ivoire:211,224,45
+Democratic Republic of the Congo:24,80,150
+Egypt:64,116,170
+Equatorial Guinea:243,196,31
+Ethiopia:169,18,252
+Gabon:4,254,8
+Ghana:109,12,209
+Ginnea-Bissau:254,207,105
+Guinea:121,103,84
+Kenya:2,93,225
+Lesotho:157,214,2
+Liberia:248,8,247
+Libya:75,253,46
+Madagascar:18,23,149
+Malawi:201,187,171
+Mali:223,126,30
+Mauritania:36,71,253
+Morocco:49,230,8
+Mozambique:234,2,208
+Namibia:186,248,106
+Niger:10,39,83
+Nigeria:92,165,226
+Republic of the Congo:252,150,2
+Rwanda:140,50,246
+Senegal:1,242,47
+Sierra Leone:140,1,148
+Somalia:252,238,173
+South Africa:92,57,29
+Sudan:10,142,253
+Tanzania:186,173,9
+Togo:234,33,207
+Tunisia:49,250,108
+Uganda:36,4,82
+Western Sahara:223,225,226
+Zambia:201,78,2
+Zimbabwe:18,118,246
+Bangladesh:75,194,48
+Borneo:248,19,147
+Brunei:157,254,174
+Burma:2,11,28
+Cambodia:121,208,253
+China:254,101,9
+India:109,94,206
+Indonesia:4,213,109
+Japan:169,8,81
+Kazakhstan:243,254,227
+Laos:64,22,2
+Malaysia:24,188,245
+Mongolia:211,124,49
+North Korea:215,72,145
+Philippines:28,229,175
+Russia:59,2,27
+South Korea:240,249,253
+Taiwan:175,38,10
+Thailand:6,166,206
+Vietnam:103,148,110
+Albania:254,52,80
+Armenia:127,242,228
+Austria:1,1,2
+Azerbaijan:152,239,245
+Belarus:249,56,50
+Belgium:80,143,144
+Bosnia and Herzegovina:15,171,176
+Bulgaria:196,34,27
+Croatia:227,250,253
+Czech Republic:40,3,10
+Denmark:44,226,205
+Estonia:231,77,111
+Finland:191,119,78
+France:12,193,229
+Georgia:86,20,1
+Germany:251,254,244
+Greece:146,10,51
+Hungary:1,209,143
+Iceland:134,99,177
+Ireland:253,96,26
+Italy:98,212,254
+Latvia:7,9,11
+Lithuania:180,254,204
+Luxembourg:237,21,113
+Macedonia:54,190,77
+Moldovia:32,123,229
+Netherlands:219,74,1
+Norway:206,228,244
+Poland:21,3,52
+Portugal:69,249,142
+Romania:245,36,178
+Serbia:163,168,25
+Slovakia:3,147,254
+Slovenia:115,53,11
+Spain:254,241,203
+Sweden:115,1,114
+Switzerland:3,240,76
+Ukraine:163,54,230
+United Kingdom:245,145,1
+Afghanistan:69,170,244
+Qatar:21,35,53
+Iran:206,249,141
+Iraq:219,3,179
+Israel:31,227,25
+Jordan:54,75,254
+Kuwait:238,121,12
+Kyrgyzstan:180,191,202
+Oman:7,21,115
+Pakistan:98,254,75
+Saudi Arabia:253,10,231
+Syria:133,211,1
+Tajikstan:1,98,243
+Turkey:146,98,54
+Turkmenistan:251,211,139
+United Arab Emirates:86,10,181
+Uzbekistan:12,254,24
+Yemen:191,20,254
+Alaska:231,191,12
+Belize:44,121,201
+Canada:40,75,116
+Elsalvador:227,227,74
+Greenland:196,3,232
+Guatemala:15,250,1
+Mexico:80,35,242
+United States:249,170,55
+Australia:151,145,138
+New Zealand:1,54,182
+Papua New Guinea:128,240,23
+Argentina:254,1,254
+Bolivia:103,241,13
+Brazil:6,53,200
+Chile:175,147,117
+Colombia:240,168,73
+Costa Rica:59,36,232
+Ecuador:28,249,1
+French Guiana:215,3,242
+Guyana:211,228,56
+Honduras:24,73,137
+Nicaragua:64,123,183
+Panama:243,190,22
+Paraguay:169,22,254
+Peru:4,254,13
+Suriname:109,9,199
+Uruguay:254,212,119
+Venezuela:121,96,72
