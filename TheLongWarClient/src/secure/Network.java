@@ -19,7 +19,7 @@ public class Network {
     public static String username;
     public static String session;
     
-    private final static String host = "192.168.0.99";
+    private final static String host = "203.122.219.233";
     private final static int port = 2574;
     
     /**

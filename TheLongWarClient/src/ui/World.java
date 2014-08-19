@@ -4,6 +4,7 @@ import data.Nation;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.MediaTracker;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.event.ComponentAdapter;
@@ -120,10 +121,14 @@ public class World extends JPanel {
     public World() {
         try {
             worldImage = ImageIO.read(Resources.getResource("world.jpg"));
+            MediaTracker mt = new MediaTracker(this);
+            mt.addImage(worldImage, 0);
+            mt.waitForAll();
+            
             mapOverlay = new BufferedImage(worldImage.getWidth(), worldImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
             allianceOverlay = new BufferedImage(worldImage.getWidth(), worldImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
             mapScaled = worldImage.getSubimage(panX, panY, (int)(mapOverlay.getWidth()/zoom), (int)(mapOverlay.getHeight()/zoom))
-                        .getScaledInstance((int)(getWidth()), (int)(getHeight()), BufferedImage.SCALE_DEFAULT);
+                        .getScaledInstance((int)(Home.self.getWidth()), (int)(Home.self.getHeight()), BufferedImage.SCALE_DEFAULT);
             buildAllianceOverlay();
             buildOverlay();
         } catch (Exception e) {
