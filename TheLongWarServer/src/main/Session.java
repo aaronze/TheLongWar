@@ -3,9 +3,13 @@ package main;
 import data.Account;
 import data.Codes;
 import data.DataManager;
+import data.FileManifest;
 import data.Log;
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -17,6 +21,7 @@ import java.util.Date;
 public class Session extends Thread {
     private final Socket socket;
     private PrintWriter out;
+    private OutputStream outStream;
     private BufferedReader in;
     
     public Session(Socket s) {
@@ -27,7 +32,8 @@ public class Session extends Thread {
     public void run() {
         System.out.println("Session created.");
         try {
-            out = new PrintWriter(socket.getOutputStream(), true);
+            outStream = socket.getOutputStream();
+            out = new PrintWriter(outStream, true);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             String line;
             while ((line = in.readLine()) != null) {
@@ -154,8 +160,50 @@ public class Session extends Thread {
                 }
             }
             
+            if (command == Codes.REQUEST_FILE) {
+                // Inputs: Filename
+                // Outputs: File if valid file
+                
+                String filename = line.substring(line.indexOf(" ")+1);
+                File file = new File(filename);
+                
+                if (FileManifest.isInManifest(file)) {
+                    out.println(""+Codes.RESPONSE_SUCCESS);
+                    
+                    transfer(file);
+                    
+                    // Flush a sucess
+                    out.println(""+Codes.RESPONSE_SUCCESS);
+                } else {
+                    out.println(""+Codes.RESPONSE_FAIL);
+                }
+            }
         } catch (Exception e) {
             Log.log("Error in request: [" + line + "]");
+            e.printStackTrace();
+        }
+    }
+    
+    public void transfer(File file) {
+        try (FileInputStream reader = new FileInputStream(file)) {
+            // Send file name and size
+            String filename = file.getPath();
+            long filesize = file.length();
+            
+            out.println(filesize + " " + filename);
+           
+            int read;
+            byte[] buffer = new byte[1024];
+            int pos = 0;
+            
+            while (pos <= filesize) {
+                read = reader.read(buffer);
+                outStream.write(buffer, 0, read);
+                pos += read;
+            }
+            
+            reader.close();
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

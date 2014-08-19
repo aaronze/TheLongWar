@@ -32,6 +32,29 @@ public class Home extends JFrame {
         
         Network.connect();
         
+        try {
+            Thread.sleep(2000);
+            
+            String packet = "";
+            packet += Codes.REQUEST_FILE + " ";
+            packet += "codes.txt";
+            String response = Network.request(packet);
+            
+            if (response.equals(""+Codes.RESPONSE_SUCCESS)) {
+                System.out.println("File transfer initiated");
+                
+                
+                
+                Network.download(null, WIDTH);
+            } else {
+                System.out.println("File transfer failed");
+            }
+        }
+        catch (Exception e) {
+            
+        }
+        
+        
         setSize(1024, 768);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);

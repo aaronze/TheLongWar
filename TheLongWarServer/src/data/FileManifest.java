@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.security.MessageDigest;
+import java.util.ArrayList;
 
 /**
  * @author Aaron
@@ -14,6 +15,7 @@ public class FileManifest {
     
     public static File manifest = new File("manifest.txt");
     public static File syncFolder = new File("sync");
+    public static ArrayList<File> acceptedUploads = new ArrayList<>();
     
     public static void main(String[] args) {
         
@@ -51,6 +53,7 @@ public class FileManifest {
             entry += folder.getPath().substring(folder.getPath().indexOf("sync") + 5);
 
             manifestWriter.println(entry);
+            acceptedUploads.add(folder);
         }
     }
     
@@ -81,5 +84,9 @@ public class FileManifest {
         }
 
         return hash;
+    }
+    
+    public static boolean isInManifest(File file) {
+        return acceptedUploads.contains(file);
     }
 }

@@ -1,8 +1,12 @@
 package secure;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.math.BigInteger;
 import java.net.*;
@@ -13,7 +17,9 @@ import java.security.MessageDigest;
  */
 public class Network {
     private static Socket socket;
+    private static InputStream inStream;
     private static BufferedReader in;
+    private static OutputStream outStream;
     private static PrintWriter out;
     
     public static String username;
@@ -34,8 +40,10 @@ public class Network {
                     socket = new Socket(host, port);
                     System.out.println("Connected!");
                     
-                    out = new PrintWriter(socket.getOutputStream(), true);
-                    in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                    outStream = socket.getOutputStream();
+                    out = new PrintWriter(outStream, true);
+                    inStream = socket.getInputStream();
+                    in = new BufferedReader(new InputStreamReader(inStream));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -83,5 +91,33 @@ public class Network {
         }
         
         return md5;
+    }
+    
+    public static void downloadFile() {
+        long length = 0;
+        File file = null;
+        
+        try {
+            String info = in.readLine();
+
+            length = Long.parseLong(info.substring(0, info.indexOf(" ")));
+            file = new File(info.substring(info.indexOf(" ")+1));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        try (FileOutputStream writer = new FileOutputStream(file)) {
+            int read;
+            int pos = 0;
+            byte[] buffer = new byte[1024];
+            
+            while (pos < length - buffer.length) {
+                read = inStream.read(buffer);
+                writer.write(buffer, 0, read);
+                pos += read;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
