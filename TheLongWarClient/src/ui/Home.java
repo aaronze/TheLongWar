@@ -33,7 +33,7 @@ public class Home extends JFrame {
         Network.connect();
         
         try {
-            Thread.sleep(2000);
+            Thread.sleep(1000);
             
             String packet = "";
             packet += Codes.REQUEST_FILE + " ";
@@ -45,11 +45,11 @@ public class Home extends JFrame {
 
                 Network.downloadFile();
             } else {
-                System.out.println("File transfer failed");
+                System.out.println("File transfer failed with error code: " + response);
             }
         }
         catch (Exception e) {
-            
+            e.printStackTrace();
         }
         
         

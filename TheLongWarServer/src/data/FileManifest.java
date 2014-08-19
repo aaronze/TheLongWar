@@ -15,7 +15,7 @@ public class FileManifest {
     
     public static File manifest = new File("manifest.txt");
     public static File syncFolder = new File("sync");
-    public static ArrayList<File> acceptedUploads = new ArrayList<>();
+    public static ArrayList<String> acceptedUploads = new ArrayList<>();
     
     public static void main(String[] args) {
         
@@ -53,7 +53,7 @@ public class FileManifest {
             entry += folder.getPath().substring(folder.getPath().indexOf("sync") + 5);
 
             manifestWriter.println(entry);
-            acceptedUploads.add(folder);
+            acceptedUploads.add(folder.getName());
         }
     }
     
@@ -86,7 +86,7 @@ public class FileManifest {
         return hash;
     }
     
-    public static boolean isInManifest(File file) {
-        return acceptedUploads.contains(file);
+    public static boolean isInManifest(String filename) {
+        return acceptedUploads.contains(filename);
     }
 }

@@ -51,7 +51,7 @@ public class Session extends Thread {
     
     public void processCommand(String line) {
         try {
-            int command = Integer.parseInt(""+line.substring(0, line.indexOf(" ")));
+            int command = Integer.parseInt(line.substring(0, line.indexOf(" ")));
             
             if (command == Codes.REQUEST_GET_CURRENT_STATE) {
                 int[] stream = DataManager.toDataStream();
@@ -167,7 +167,7 @@ public class Session extends Thread {
                 String filename = line.substring(line.indexOf(" ")+1);
                 File file = new File(filename);
                 
-                if (FileManifest.isInManifest(file)) {
+                if (FileManifest.isInManifest(file.getName())) {
                     out.println(""+Codes.RESPONSE_SUCCESS);
                     
                     transfer(file);
