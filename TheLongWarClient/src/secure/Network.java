@@ -102,6 +102,8 @@ public class Network {
 
             length = Long.parseLong(info.substring(0, info.indexOf(" ")));
             file = new File(info.substring(info.indexOf(" ")+1));
+            
+            System.out.println("Downloading " + file.getName() + ": " + length);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -116,6 +118,14 @@ public class Network {
                 writer.write(buffer, 0, read);
                 pos += read;
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        try {
+            // Read final success message
+            String success = in.readLine();
+            System.out.println("Success message: " + success);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -42,10 +42,8 @@ public class Home extends JFrame {
             
             if (response.equals(""+Codes.RESPONSE_SUCCESS)) {
                 System.out.println("File transfer initiated");
-                
-                
-                
-                Network.download(null, WIDTH);
+
+                Network.downloadFile();
             } else {
                 System.out.println("File transfer failed");
             }

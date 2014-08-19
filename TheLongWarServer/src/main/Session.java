@@ -51,7 +51,7 @@ public class Session extends Thread {
     
     public void processCommand(String line) {
         try {
-            int command = Integer.parseInt(""+line.charAt(0));
+            int command = Integer.parseInt(""+line.substring(0, line.indexOf(" ")));
             
             if (command == Codes.REQUEST_GET_CURRENT_STATE) {
                 int[] stream = DataManager.toDataStream();
