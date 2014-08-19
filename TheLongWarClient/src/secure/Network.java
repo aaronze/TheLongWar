@@ -118,6 +118,10 @@ public class Network {
                 writer.write(buffer, 0, read);
                 pos += read;
             }
+            
+            read = inStream.read(buffer, 0, (int)(length - buffer.length));
+            writer.write(buffer, 0, read);
+            
         } catch (Exception e) {
             e.printStackTrace();
         }

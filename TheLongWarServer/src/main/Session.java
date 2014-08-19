@@ -197,9 +197,13 @@ public class Session extends Thread {
             int pos = 0;
             
             while (pos <= filesize) {
-                read = reader.read(buffer);
-                outStream.write(buffer, 0, read);
-                pos += read;
+                read = reader.read(buffer, pos, buffer.length);
+                if (read > 0) {
+                    outStream.write(buffer, 0, read);
+                    pos += read;
+                } else {
+                    break;
+                }
             }
             
             reader.close();
