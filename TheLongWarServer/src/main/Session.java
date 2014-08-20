@@ -31,9 +31,13 @@ public class Session extends Thread {
         this.socket = s;
     }
     
+    public static void log(String s) {
+        
+    }
+    
     @Override
     public void run() {
-        System.out.println("Session created.");
+        Log.log("session created with " + socket.toString());
         try {
             outStream = socket.getOutputStream();
             out = new PrintWriter(outStream, true);
@@ -48,7 +52,7 @@ public class Session extends Thread {
                 
             }
         } catch (Exception e) {
-            System.out.println("Session terminated.");
+            Log.log("session terminated with " + socket.toString());
         }
     }
     
@@ -204,15 +208,12 @@ public class Session extends Thread {
     }
     
     public void transfer(File file) {
-        System.out.println("Sending File: " + file.toString());
+        Log.log("Sending File: " + file.toString() + " to " + socket.getInetAddress());
         out.println(file.length() + " " + file.getName());
         
         try {
             BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));
             BufferedOutputStream bos = new BufferedOutputStream(outStream);
-            
-            System.out.println("Waiting on Client ...");
-            System.out.println("Client> " + in.readLine());
             
             byte[] buffer = new byte[1024];
             int pos = 0;
@@ -226,10 +227,7 @@ public class Session extends Thread {
             } while (pos < file.length());
             
             bis.close();
-            
-            System.out.println("Client has finished recieving file: " + in.readLine());
 
-            System.out.println("Finished sending file");
             out.println(""+Codes.RESPONSE_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
