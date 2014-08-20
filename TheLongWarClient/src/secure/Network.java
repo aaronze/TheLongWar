@@ -30,7 +30,7 @@ public class Network {
     public static String username;
     public static String session;
     
-    private final static String host = "127.0.0.1";//203.122.219.233";
+    private final static String host = "203.122.219.233";
     private final static int port = 2574;
     
     /**
