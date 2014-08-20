@@ -13,7 +13,7 @@ public class Log {
     
     static {
         try {
-            writer = new PrintWriter(new FileWriter(log));
+            writer = new PrintWriter(new FileWriter(log, true));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -23,13 +23,14 @@ public class Log {
         try {
             
             System.out.println(s);
-            writer.println(s);
+            writer.println(System.nanoTime() + ": " + s);
+            writer.flush();
             
         } catch (Exception e) {
             System.err.println("Log File crashed. Attempting to reopen");
             
             try {
-                writer = new PrintWriter(new FileWriter(log));
+                writer = new PrintWriter(new FileWriter(log, true));
             } catch (Exception f) {
                 System.err.println("Cannot reopen log file. Fix asap.");
                 e.printStackTrace();
