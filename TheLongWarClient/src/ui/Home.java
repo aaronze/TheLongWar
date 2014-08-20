@@ -27,26 +27,15 @@ public class Home extends JFrame {
     public Home() {
         self = this;
         
-        Mixer.register(new Audio(Resources.getResource("bgmusicloop.wav"), "background"));
-        Mixer.loop("background");
+        //Mixer.register(new Audio(Resources.getResource("bgmusicloop.wav"), "background"));
+        //Mixer.loop("background");
         
         Network.connect();
         
         try {
             Thread.sleep(1000);
             
-            String packet = "";
-            packet += Codes.REQUEST_FILE + " ";
-            packet += "countries.png";
-            String response = Network.request(packet);
-            
-            if (response.equals(""+Codes.RESPONSE_SUCCESS)) {
-                System.out.println("File transfer initiated");
-
-                Network.downloadFile();
-            } else {
-                System.out.println("File transfer failed with error code: " + response);
-            }
+            Network.runPatcher();
         }
         catch (Exception e) {
             e.printStackTrace();

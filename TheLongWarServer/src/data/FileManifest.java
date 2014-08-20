@@ -17,10 +17,6 @@ public class FileManifest {
     public static File syncFolder = new File("sync");
     public static ArrayList<String> acceptedUploads = new ArrayList<>();
     
-    public static void main(String[] args) {
-        
-    }
-    
     static PrintWriter manifestWriter;
     static {
         // Build manifest for sync folder

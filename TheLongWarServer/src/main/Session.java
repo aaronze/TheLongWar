@@ -54,7 +54,12 @@ public class Session extends Thread {
     
     public void processCommand(String line) {
         try {
-            int command = Integer.parseInt(line.substring(0, line.indexOf(" ")));
+            int command;
+            
+            if (line.contains(" ")) 
+                command = Integer.parseInt(line.substring(0, line.indexOf(" ")));
+            else
+                command = Integer.parseInt(line);
             
             if (command == Codes.REQUEST_GET_CURRENT_STATE) {
                 int[] stream = DataManager.toDataStream();
@@ -181,6 +186,17 @@ public class Session extends Thread {
                     out.println(""+Codes.RESPONSE_FAIL);
                 }
             }
+            
+            if (command == Codes.REQUEST_MANIFEST) {
+                // Inputs: None
+                // Outputs: Manifest File
+                
+                out.println(""+Codes.RESPONSE_SUCCESS);
+                
+                transfer(FileManifest.manifest);
+                
+                out.println(""+Codes.RESPONSE_SUCCESS);
+            }
         } catch (Exception e) {
             Log.log("Error in request: [" + line + "]");
             e.printStackTrace();
@@ -188,14 +204,15 @@ public class Session extends Thread {
     }
     
     public void transfer(File file) {
-        System.out.println(file.length());
+        System.out.println("Sending File: " + file.toString());
         out.println(file.length() + " " + file.getName());
         
         try {
             BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));
             BufferedOutputStream bos = new BufferedOutputStream(outStream);
             
-            in.readLine();
+            System.out.println("Waiting on Client ...");
+            System.out.println("Client> " + in.readLine());
             
             byte[] buffer = new byte[1024];
             int pos = 0;
@@ -206,6 +223,7 @@ public class Session extends Thread {
                 bos.write(buffer, 0, read);
                 bos.flush();
                 if (read > 0) pos += read;
+                Thread.sleep(5);
             } while (pos < file.length());
             
             bis.close();
@@ -213,7 +231,7 @@ public class Session extends Thread {
             e.printStackTrace();
         }
         
-        System.out.println("Finished writing");
+        System.out.println("Finished sending file");
         out.println(""+Codes.RESPONSE_SUCCESS);
     }
 }
