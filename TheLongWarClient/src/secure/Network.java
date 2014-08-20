@@ -30,7 +30,7 @@ public class Network {
     public static String username;
     public static String session;
     
-    private final static String host = "203.122.219.233";
+    private final static String host = "127.0.0.1";//203.122.219.233";
     private final static int port = 2574;
     
     /**
@@ -130,6 +130,8 @@ public class Network {
             bos.flush();
             bos.close();
             
+            out.println(""+Codes.RESPONSE_SUCCESS);
+            
             long downloadEnd = System.nanoTime();
             long timeTaken = downloadEnd - downloadStart;
             
@@ -193,8 +195,6 @@ public class Network {
             System.err.println("Failed to patch: " + file.toString());
             System.err.println("Error code: " + response);
         }
-        
-        try {Thread.sleep(100);} catch (Exception e) {}
     }
     
     public static String hash(File file) {

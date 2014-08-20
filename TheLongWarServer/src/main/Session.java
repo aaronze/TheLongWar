@@ -223,15 +223,16 @@ public class Session extends Thread {
                 bos.write(buffer, 0, read);
                 bos.flush();
                 if (read > 0) pos += read;
-                Thread.sleep(5);
             } while (pos < file.length());
             
             bis.close();
+            
+            System.out.println("Client has finished recieving file: " + in.readLine());
+
+            System.out.println("Finished sending file");
+            out.println(""+Codes.RESPONSE_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
-        System.out.println("Finished sending file");
-        out.println(""+Codes.RESPONSE_SUCCESS);
     }
 }
