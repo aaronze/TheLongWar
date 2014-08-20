@@ -62,7 +62,6 @@ public class Network {
     }
     
     public static String request(String packet) {
-        long start = System.nanoTime();
         String output = "";
         try {
             out.println(packet);
@@ -71,10 +70,6 @@ public class Network {
             System.err.println("Network Error");
             e.printStackTrace();
         }
-        long end = System.nanoTime();
-        
-        long dur = end - start;
-        System.out.println("Request [" + packet + "]" + " took " + dur / 1000000000.0 + " seconds");
         
         return output;
     }
@@ -206,6 +201,8 @@ public class Network {
                 Login.status.setText("Ready to play!");
                 Login.totalProgress.setValue(100);
                 Login.fileProgress.setValue(100);
+                
+                String success = in.readLine();
             } catch (Exception e) {
                 e.printStackTrace();
             }
