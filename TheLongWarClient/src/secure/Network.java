@@ -130,6 +130,9 @@ public class Network {
                 bos.write(data, 0, read);
                 if (read > 0) total += read;
                 Login.fileProgress.setValue(total * 100 / data.length);
+                long timeTaken = System.nanoTime() - downloadStart;
+                double downloadRateKBS = (total * 0.001) / (timeTaken * 0.000000001);
+                Login.downloadSpeed.setText((int)downloadRateKBS + " kB/s");
             }
             Login.fileProgress.setValue(100);
             bos.flush();
