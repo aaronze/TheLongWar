@@ -16,6 +16,7 @@ import java.io.PrintWriter;
 import java.math.BigInteger;
 import java.net.*;
 import java.security.MessageDigest;
+import ui.Login;
 
 /**
  * @author Aaron
@@ -37,13 +38,15 @@ public class Network {
      * Attempts to establish a connection in a non-blocking method
      */
     public static void connect() {
+        Login.status.setText("Connecting ...");
+        
         // Open a new thread for connection
         Thread connection = new Thread() {
             @Override
             public void run() {
                 try {
                     socket = new Socket(host, port);
-                    System.out.println("Connected!");
+                    Login.status.setText("Connected!");
                     
                     outStream = socket.getOutputStream();
                     out = new PrintWriter(outStream, true);
@@ -103,12 +106,12 @@ public class Network {
     
     public static String downloadFile() {
         try {
-            System.out.println("Waiting for file info ...");
+            Login.fileProgress.setValue(0);
+            
             String info = in.readLine();
             while (info.equals(""+Codes.RESPONSE_SUCCESS)) info = in.readLine();
             long length = Long.parseLong(info.substring(0, info.indexOf(" ")));
             String filename = info.substring(info.indexOf(" ")+1);
-            System.out.println(info);
 
             // Send a message declaring ready
             out.println(""+Codes.RESPONSE_SUCCESS);
@@ -126,7 +129,9 @@ public class Network {
                 read = bis.read(data);
                 bos.write(data, 0, read);
                 if (read > 0) total += read;
+                Login.fileProgress.setValue(total * 100 / data.length);
             }
+            Login.fileProgress.setValue(100);
             bos.flush();
             bos.close();
             
@@ -136,7 +141,8 @@ public class Network {
             long timeTaken = downloadEnd - downloadStart;
             
             double downloadRateKBS = (total / 1000.0) / (timeTaken / 1000000000.0);
-            System.out.println("Downloaded " + filename + " at " + downloadRateKBS + " kb/s");
+            Login.downloadSpeed.setText((int)downloadRateKBS + " kB/s");
+            Login.fileProgress.setValue(0);
             
             return in.readLine();
         } catch (Exception e) {
@@ -146,14 +152,29 @@ public class Network {
         return ""+Codes.RESPONSE_FAIL;
     }
     
-    public static void runPatcher() {
+    public static void runPatcher() { 
+        Login.status.setText("Verifying Files ...");
+        Login.totalProgress.setValue(0);
         request(""+Codes.REQUEST_MANIFEST);
         
         // Download manifest
         String successCode = downloadFile();
         
         if (successCode.equals(""+Codes.RESPONSE_SUCCESS)) {
+            // Count the amount of lines
+            int total = 0;
+            try (BufferedReader reader = new BufferedReader(new FileReader(new File("manifest.txt")))) {
+                String line;
+                
+                while ((line = reader.readLine()) != null) {
+                    total++;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+           
             // Run through the manifest looking for any files that need syncing
+            int counter = 0;
             try (BufferedReader reader = new BufferedReader(new FileReader(new File("manifest.txt")))) {
                 String line;
                 
@@ -168,25 +189,30 @@ public class Network {
 
                         if (!expectedHash.equals(calculatedHash)) {
                             patch(file);
-                        } else {
-                            System.out.println("Checked " + file.toString());
                         }
                     } else {
                         patch(file);
                     }
+                    
+                    counter++;
+                    Login.totalProgress.setValue(counter * 100 / total);
                 }
-                
-                System.out.println("Patching Completed Successfully");
+
+                Login.filename.setText("");
+                Login.downloadSpeed.setText("");
+                Login.status.setText("Ready to play!");
+                Login.totalProgress.setValue(100);
+                Login.fileProgress.setValue(100);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        
-        System.out.println("Patching Completed");
     }
     
     private static void patch(File file) {
-        System.out.println("Patching " + file.toString());
+        Login.status.setText("Updating ...");
+        Login.filename.setText(file.getName());
+        
         String response = Network.request(Codes.REQUEST_FILE + " " + file.getName());
         
         if (response.equals(""+Codes.RESPONSE_SUCCESS)) {

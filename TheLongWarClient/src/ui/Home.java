@@ -30,18 +30,6 @@ public class Home extends JFrame {
         //Mixer.register(new Audio(Resources.getResource("bgmusicloop.wav"), "background"));
         //Mixer.loop("background");
         
-        Network.connect();
-        
-        try {
-            Thread.sleep(1000);
-            
-            Network.runPatcher();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        
-        
         setSize(1024, 768);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
