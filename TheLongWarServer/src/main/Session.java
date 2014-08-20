@@ -5,9 +5,12 @@ import data.Codes;
 import data.DataManager;
 import data.FileManifest;
 import data.Log;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
@@ -173,7 +176,7 @@ public class Session extends Thread {
                     transfer(file);
                     
                     // Flush a sucess
-                    out.println(""+Codes.RESPONSE_SUCCESS);
+                    //out.println(""+Codes.RESPONSE_SUCCESS);
                 } else {
                     out.println(""+Codes.RESPONSE_FAIL);
                 }
@@ -185,30 +188,32 @@ public class Session extends Thread {
     }
     
     public void transfer(File file) {
-        try (FileInputStream reader = new FileInputStream(file)) {
-            // Send file name and size
-            String filename = file.getPath();
-            long filesize = file.length();
+        System.out.println(file.length());
+        out.println(file.length() + " " + file.getName());
+        
+        try {
+            BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));
+            BufferedOutputStream bos = new BufferedOutputStream(outStream);
             
-            out.println(filesize + " " + filename);
-           
-            int read;
+            in.readLine();
+            
             byte[] buffer = new byte[1024];
             int pos = 0;
+            int read = 0;
             
-            while (pos <= filesize) {
-                read = reader.read(buffer, pos, buffer.length);
-                if (read > 0) {
-                    outStream.write(buffer, 0, read);
-                    pos += read;
-                } else {
-                    break;
-                }
-            }
+            do {
+                read = bis.read(buffer);
+                bos.write(buffer, 0, read);
+                bos.flush();
+                if (read > 0) pos += read;
+            } while (pos < file.length());
             
-            reader.close();
+            bis.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
+        
+        System.out.println("Finished writing");
+        out.println(""+Codes.RESPONSE_SUCCESS);
     }
 }

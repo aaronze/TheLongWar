@@ -1,7 +1,9 @@
 package secure;
 
+import data.Codes;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -93,45 +95,47 @@ public class Network {
         return md5;
     }
     
+    public static int total = 0;
+    public static long downloadStart = 0;
+    
     public static void downloadFile() {
-        long length = 0;
-        File file = null;
-        
         try {
             String info = in.readLine();
+            long length = Long.parseLong(info.substring(0, info.indexOf(" ")));
+            String filename = info.substring(info.indexOf(" ")+1);
+            System.out.println(info);
 
-            length = Long.parseLong(info.substring(0, info.indexOf(" ")));
-            file = new File(info.substring(info.indexOf(" ")+1));
+            // Send a message declaring ready
+            out.println(""+Codes.RESPONSE_SUCCESS);
             
-            System.out.println("Downloading " + file.getName() + ": " + length);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        
-        try (FileOutputStream writer = new FileOutputStream(file)) {
-            int read;
-            int pos = 0;
-            byte[] buffer = new byte[1024];
+            BufferedInputStream bis = new BufferedInputStream(inStream);
+            BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(filename));
             
-            while (pos < length - buffer.length) {
-                read = inStream.read(buffer);
-                writer.write(buffer, 0, read);
-                pos += read;
+            byte[] data = new byte[(int)length];
+            
+            int read = 1;
+            total = 0;
+            
+            downloadStart = System.nanoTime();
+            while (total < data.length) {
+                read = bis.read(data);
+                bos.write(data, 0, read);
+                if (read > 0) total += read;
             }
+            bos.flush();
+            bos.close();
             
-            read = inStream.read(buffer, 0, (int)(length - buffer.length));
-            writer.write(buffer, 0, read);
+            long downloadEnd = System.nanoTime();
+            long timeTaken = downloadEnd - downloadStart;
             
+            double downloadRateKBS = (total / 1000.0) / (timeTaken / 1000000000.0);
+            System.out.println("Downloaded " + filename + " at " + downloadRateKBS + " kb/s");
+            
+            String success = in.readLine();
         } catch (Exception e) {
             e.printStackTrace();
         }
         
-        try {
-            // Read final success message
-            String success = in.readLine();
-            System.out.println("Success message: " + success);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        
     }
 }

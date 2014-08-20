@@ -37,7 +37,7 @@ public class Home extends JFrame {
             
             String packet = "";
             packet += Codes.REQUEST_FILE + " ";
-            packet += "codes.txt";
+            packet += "countries.png";
             String response = Network.request(packet);
             
             if (response.equals(""+Codes.RESPONSE_SUCCESS)) {

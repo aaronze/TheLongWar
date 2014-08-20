@@ -8,5 +8,6 @@ c7bb89509ad255e6e45511eaccab3002 codes.txt
 059a51ee22597f800a1516870aa92a0a middleeast.png
 c192d78f529a0e34960af639d59283bf russia.png
 bc9b7aef88cfed6bafd0a6b70c5e51bf southamerica.png
+0cbc6611f5540bd0809a388dc95a615b test.txt
 14497c1eb09a791c2ad871752c9c1f80 usa.png
 667aa1e3146909b022e85e0c7f3d002a world.jpg
