@@ -129,6 +129,7 @@ public class World extends JPanel {
             allianceOverlay = new BufferedImage(worldImage.getWidth(), worldImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
             mapScaled = worldImage.getSubimage(panX, panY, (int)(mapOverlay.getWidth()/zoom), (int)(mapOverlay.getHeight()/zoom))
                         .getScaledInstance((int)(Home.self.getWidth()), (int)(Home.self.getHeight()), BufferedImage.SCALE_DEFAULT);
+             Handle.forceRebuild = true;
             buildAllianceOverlay();
             buildOverlay();
         } catch (Exception e) {
@@ -211,6 +212,7 @@ public class World extends JPanel {
                 mapScaled = worldImage.getSubimage(0, 0, (int)(mapOverlay.getWidth()/zoom), (int)(mapOverlay.getHeight()/zoom))
                         .getScaledInstance((int)(getWidth()), (int)(getHeight()), BufferedImage.SCALE_DEFAULT);
                 buildOverlay();
+                Handle.forceRebuild = true;
                 buildAllianceOverlay();
             }
         });

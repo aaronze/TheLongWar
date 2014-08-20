@@ -51,6 +51,7 @@ public class Handle {
         return fakeOwner;
     }
     
+    public static boolean forceRebuild = false;
     /**
      * Returns true if nation data received is visually different and should cause
      * a rebuild of the countries overlay layer.
@@ -59,7 +60,9 @@ public class Handle {
      */
     public static boolean buildNations() {
         int lastHash = 0;
-        if (nations != null) lastHash = hash(nations);
+        if (nations != null && !forceRebuild) lastHash = hash(nations);
+        
+        forceRebuild = false;
         
         lastUpdated = new Date().getTime();
         nations = new ArrayList<>();
