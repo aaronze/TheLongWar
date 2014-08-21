@@ -8,6 +8,7 @@ package ui;
 
 import data.Codes;
 import data.UserPreferences;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 import secure.Network;
@@ -24,6 +25,7 @@ public class Login extends javax.swing.JPanel {
     public static JLabel downloadSpeed;
     public static JProgressBar fileProgress;
     public static JProgressBar totalProgress;
+    public static JButton playButton;
     
     private volatile static boolean isInitialized = false;
     
@@ -39,6 +41,7 @@ public class Login extends javax.swing.JPanel {
         fileProgress = barFileProgress;
         totalProgress = barTotalPatch;
         downloadSpeed = lblDownloadSpeed;
+        playButton = btnLogin;
 
         // Get user preferences and set up login screen
         if (UserPreferences.isAutoLogin() || UserPreferences.isUserRemembered()) {
@@ -116,6 +119,8 @@ public class Login extends javax.swing.JPanel {
         lblStatus = new javax.swing.JLabel();
         lblDownloadSpeed = new javax.swing.JLabel();
 
+        jPanel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
         jLabel1.setText("User Name:");
 
         jLabel2.setText("Password:");
@@ -135,7 +140,8 @@ public class Login extends javax.swing.JPanel {
             }
         });
 
-        btnLogin.setText("LOGIN");
+        btnLogin.setText("PLAY");
+        btnLogin.setEnabled(false);
         btnLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLoginActionPerformed(evt);
@@ -194,8 +200,10 @@ public class Login extends javax.swing.JPanel {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 405, Short.MAX_VALUE)
+            .addGap(0, 399, Short.MAX_VALUE)
         );
+
+        jPanel3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         lblFilename.setText("        ");
 
@@ -210,7 +218,7 @@ public class Login extends javax.swing.JPanel {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(barTotalPatch, javax.swing.GroupLayout.DEFAULT_SIZE, 356, Short.MAX_VALUE)
+                    .addComponent(barTotalPatch, javax.swing.GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE)
                     .addComponent(barFileProgress, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(lblFilename)

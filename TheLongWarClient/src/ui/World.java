@@ -1,5 +1,7 @@
 package ui;
 
+import audio.Audio;
+import audio.Mixer;
 import data.Nation;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -120,6 +122,9 @@ public class World extends JPanel {
     
     public World() {
         try {
+            Mixer.register(new Audio(Resources.getResource("bgmusicloop.wav"), "background"));
+            Mixer.loop("background");
+            
             worldImage = ImageIO.read(Resources.getResource("world.jpg"));
             MediaTracker mt = new MediaTracker(this);
             mt.addImage(worldImage, 0);

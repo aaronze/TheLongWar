@@ -27,10 +27,7 @@ public class Home extends JFrame {
     public Home() {
         self = this;
         
-        //Mixer.register(new Audio(Resources.getResource("bgmusicloop.wav"), "background"));
-        //Mixer.loop("background");
-        
-        setSize(1024, 768);
+        setSize(1200, 800);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
         
@@ -57,7 +54,7 @@ public class Home extends JFrame {
     
     public void loadWorld() {
         world = new World();
-        world.setSize(1024, 768);
+        world.setSize(1200, 800);
         world.setVisible(true);
         add(world);
     }

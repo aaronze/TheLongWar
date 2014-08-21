@@ -34,7 +34,6 @@ public class Handle {
         packet += Codes.toCode(toCountry, toNation);
         
         String response = Network.request(packet);
-        System.out.println(response);
     }
     
     public static ArrayList<String> getOwner(String country) {

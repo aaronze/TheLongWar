@@ -201,6 +201,7 @@ public class Network {
                 Login.status.setText("Ready to play!");
                 Login.totalProgress.setValue(100);
                 Login.fileProgress.setValue(100);
+                Login.playButton.setEnabled(true);
                 
                 String success = in.readLine();
             } catch (Exception e) {
